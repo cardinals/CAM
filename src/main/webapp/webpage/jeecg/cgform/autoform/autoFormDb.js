@@ -289,4 +289,4 @@ function getTableName(){
 		}
 	}
 }
-<!--update-end--Author:zzl  Date:20151101 for：sql解析获取数据库表名填充数据源 -->
+/*--update-end--Author:zzl  Date:20151101 for：sql解析获取数据库表名填充数据源 --*/
