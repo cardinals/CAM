@@ -3,6 +3,7 @@ package org.jeecgframework.core.extend.hqlsearch;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.HashMap;
@@ -150,10 +151,41 @@ public class HqlGenerateUtil {
 								value);
 						ObjectParseUtil.addCriteria(cq, aliasName, rule, value);
 					} else if (parameterMap != null) {
-						ObjectParseUtil.addCriteria(cq, aliasName,
-								HqlRuleEnum.GE, beginValue);
-						ObjectParseUtil.addCriteria(cq, aliasName,
-								HqlRuleEnum.LE, endValue);
+						 //支持所有类型数字类型区间查询 
+                        Object beginValue_=null , endValue_ =null;
+                        if ("class java.lang.Integer".equals(type)) {
+                                if(!"".equals(beginValue)&&null!=beginValue)
+                                        beginValue_ = Integer.parseInt(beginValue);
+                                if(!"".equals(endValue)&&null!=endValue)
+                                        endValue_ =Integer.parseInt(endValue);
+                        } else if ("class java.math.BigDecimal".equals(type)) {
+                                if(!"".equals(beginValue)&&null!=beginValue)
+                                        beginValue_ = new BigDecimal(beginValue);
+                                if(!"".equals(endValue)&&null!=endValue)
+                                        endValue_ = new BigDecimal(endValue);
+                        } else if ("class java.lang.Short".equals(type)) {
+                                if(!"".equals(beginValue)&&null!=beginValue)
+                                        beginValue_ =Short.parseShort(beginValue);
+                                if(!"".equals(endValue)&&null!=endValue)
+                                        endValue_ =Short.parseShort(endValue);
+                        } else if ("class java.lang.Long".equals(type)) {
+                                if(!"".equals(beginValue)&&null!=beginValue)
+                                        beginValue_ = Long.parseLong(beginValue);
+                                if(!"".equals(endValue)&&null!=endValue)
+                                        endValue_ =Long.parseLong(endValue);
+                        } else if ("class java.lang.Float".equals(type)) {
+                                if(!"".equals(beginValue)&&null!=beginValue)
+                                        beginValue_ = Float.parseFloat(beginValue);
+                                if(!"".equals(endValue)&&null!=endValue)
+                                        endValue_ =Float.parseFloat(endValue);
+                        }else{
+                                 beginValue_ = beginValue;
+                                 endValue_ = endValue;
+                        }
+                        ObjectParseUtil.addCriteria(cq, aliasName,
+                                HqlRuleEnum.GE, beginValue_);
+                        ObjectParseUtil.addCriteria(cq, aliasName,
+                                HqlRuleEnum.LE, endValue_);
 					}
 					// for：查询拼装的替换
 				} else if ("class java.util.Date".equals(type)) {
