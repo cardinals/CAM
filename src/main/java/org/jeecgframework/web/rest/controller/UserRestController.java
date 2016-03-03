@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * TSUser的Restful API的Controller.
+ * TSUser的Restful API的Controller.  请求路径 rest/user
  * 
  * @author liuht
  */
@@ -43,13 +43,15 @@ public class UserRestController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<TSUser> list() {
+		
 		List<TSUser> listUsers=userService.getList(TSUser.class);
 		return listUsers;
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") Long id) {
+		
 		TSUser task = userService.get(TSUser.class, id);
 		if (task == null) {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);

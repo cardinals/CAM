@@ -111,6 +111,12 @@
 						<!--add-end-Author: zzl Date:20150709 for：社区介绍 -->
 					</list>
 				</property>
+				<!-- 模糊匹配 ,主要过滤rest请求-->
+				<property name="excludeContainUrls">
+					<list>
+						<value>rest/</value>
+					</list>
+				</property>
 			</bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
