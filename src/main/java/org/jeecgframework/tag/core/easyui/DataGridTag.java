@@ -1186,66 +1186,71 @@ public class DataGridTag extends TagSupport {
 				if (column.getFormatterjs() != null) {
 					sb.append(",formatter:function(value,rec,index){");
 					sb.append(" return " + column.getFormatterjs() + "(value,rec,index);}");
-				} else {
-					// 显示图片
-					if (column.isImage()) {
-						if (column.getImageSize() != null) {// 自定义显示图片
-							String[] tld = column.getImageSize().split(",");
-							sb.append(",formatter:function(value,rec,index){");
-							sb.append(" return '<img width=\"" + tld[0] + "\" height=\"" + tld[1]
-									+ "\" border=\"0\" src=\"'+value+'\"/>';}");
-							tld = null;
-						} else {
-							sb.append(",formatter:function(value,rec,index){");
-							sb.append(" return '<img border=\"0\" src=\"'+value+'\"/>';}");
-						}
-					} else if (column.getDownloadName() != null) {
+				}
+				// 显示图片
+				if (column.isImage()) {
+					if (column.getImageSize() != null) {// 自定义显示图片
+						String[] tld = column.getImageSize().split(",");
 						sb.append(",formatter:function(value,rec,index){");
-						sb.append(" return '<a target=\"_blank\" href=\"'+value+'\">" + column.getDownloadName()
-								+ "</a>';}");
-					} else if (column.getUrl() != null) { // 自定义链接
+						sb.append(" return '<img width=\"" + tld[0] + "\" height=\"" + tld[1]
+								+ "\" border=\"0\" src=\"'+value+'\"/>';}");
+						tld = null;
+					} else {
 						sb.append(",formatter:function(value,rec,index){");
-						this.getFun(sb, column);
-						sb.append("}");
-					} else if (column.getField().equals("opt")) {// 加入操作
-						sb.append(",formatter:function(value,rec,index){");
-						// sb.append("return \"");
-						this.getOptUrl(sb);
-						sb.append("}");
-					} else if (columnValueList.size() > 0 && !column.getField().equals("opt")) {// 值替換
-						String testString = "";
-						for (ColumnValue columnValue : columnValueList) {
-							if (columnValue.getName().equals(column.getField())) {
-								String[] value = columnValue.getValue().split(",");
-								String[] text = columnValue.getText().split(",");
-								sb.append(",formatter:function(value,rec,index){");
-								sb.append("if(value==undefined) return '';");
-								sb.append("var valArray = value.split(',');");
-								sb.append("if(valArray.length > 1){");
-								sb.append("var checkboxValue = '';");
-								sb.append("for(var k=0; k<valArray.length; k++){");
-								for (int j = 0; j < value.length; j++) {
-									sb.append("if(valArray[k] == '" + value[j]
-											+ "'){ checkboxValue = checkboxValue + \'" + text[j] + "\' + ',';}");
-								}
-								sb.append("}");
-								sb.append("return checkboxValue.substring(0,checkboxValue.length-1);");
-								sb.append("}");
-								sb.append("else{");
-								for (int j = 0; j < value.length; j++) {
-									testString += "if(value=='" + value[j] + "'){return \'" + text[j] + "\';}";
-								}
-								sb.append(testString);
-								sb.append("else{return value;}");
-								sb.append("}");
-								sb.append("}");
-							}
-						}
-					} else if (column.getFormatter() != null) {
-						sb.append(",formatter:function(value,rec,index){");
-						sb.append(" return new Date().format('" + column.getFormatter() + "',value);}");
+						sb.append(" return '<img border=\"0\" src=\"'+value+'\"/>';}");
 					}
 				}
+				if (column.getDownloadName() != null) {
+					sb.append(",formatter:function(value,rec,index){");
+					sb.append(
+							" return '<a target=\"_blank\" href=\"'+value+'\">" + column.getDownloadName() + "</a>';}");
+				}
+				if (column.getUrl() != null) { // 自定义链接
+					sb.append(",formatter:function(value,rec,index){");
+					this.getFun(sb, column);
+					sb.append("}");
+				}
+				if (column.getField().equals("opt")) {// 加入操作
+					sb.append(",formatter:function(value,rec,index){");
+					// sb.append("return \"");
+					this.getOptUrl(sb);
+					sb.append("}");
+				}
+				if (columnValueList.size() > 0 && !column.getField().equals("opt")) {// 值替換
+					String testString = "";
+					for (ColumnValue columnValue : columnValueList) {
+						if (columnValue.getName().equals(column.getField())) {
+							String[] value = columnValue.getValue().split(",");
+							String[] text = columnValue.getText().split(",");
+							sb.append(",formatter:function(value,rec,index){");
+							sb.append("if(value==undefined) return '';");
+							sb.append("var valArray = value.split(',');");
+							sb.append("if(valArray.length > 1){");
+							sb.append("var checkboxValue = '';");
+							sb.append("for(var k=0; k<valArray.length; k++){");
+							for (int j = 0; j < value.length; j++) {
+								sb.append("if(valArray[k] == '" + value[j] + "'){ checkboxValue = checkboxValue + \'"
+										+ text[j] + "\' + ',';}");
+							}
+							sb.append("}");
+							sb.append("return checkboxValue.substring(0,checkboxValue.length-1);");
+							sb.append("}");
+							sb.append("else{");
+							for (int j = 0; j < value.length; j++) {
+								testString += "if(value=='" + value[j] + "'){return \'" + text[j] + "\';}";
+							}
+							sb.append(testString);
+							sb.append("else{return value;}");
+							sb.append("}");
+							sb.append("}");
+						}
+					}
+				}
+				if (column.getFormatter() != null) {
+					sb.append(",formatter:function(value,rec,index){");
+					sb.append(" return new Date().format('" + column.getFormatter() + "',value);}");
+				}
+
 				// 背景设置
 				if (columnStyleList.size() > 0 && !column.getField().equals("opt")) {
 					String testString = "";
