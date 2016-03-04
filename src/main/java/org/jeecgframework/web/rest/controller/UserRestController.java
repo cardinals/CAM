@@ -7,10 +7,13 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import org.jeecgframework.web.system.pojo.base.TSRoleUser;
 import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.jeecgframework.web.system.service.UserService;
 
 import org.jeecgframework.core.beanvalidator.BeanValidators;
+import org.jeecgframework.core.common.model.json.AjaxJson;
+import org.jeecgframework.core.constant.Globals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -95,7 +98,25 @@ public class UserRestController {
 	//删除用户
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable("id") Long id) {
-		userService.deleteEntityById(TSUser.class, id);
+	public void delete(@PathVariable("id") String id) {
+		//userService.deleteEntityById(TSUser.class, id);	
+		TSUser user = userService.get(TSUser.class, id);
+		List<TSRoleUser> roleUser = userService.findByProperty(TSRoleUser.class, "TSUser.id", id);
+		if (!user.getStatus().equals(Globals.User_ADMIN)) {
+			if (roleUser.size()>0) {
+				// 删除用户时先删除用户和角色关系表
+				// 同步删除用户角色关联表
+				List<TSRoleUser> roleUserList = userService.findByProperty(TSRoleUser.class, "TSUser.id", user.getId());
+				if (roleUserList.size() >= 1) {
+					for (TSRoleUser tRoleUser : roleUserList) {
+						userService.delete(tRoleUser);
+					}
+				}
+				userService.executeSql("delete from t_s_user_org where user_id=?", id); // 删除 用户-机构 数据
+                userService.delete(user);				
+			} else {
+				userService.delete(user);
+			}
+		} 
 	}
 }
