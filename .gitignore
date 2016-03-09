@@ -65,3 +65,9 @@ target/classes/spring-mvc.xml
 target/m2e-wtp/web-resources/META-INF/maven/org.jeecgframework/jeecg/pom.properties
 target/m2e-wtp/web-resources/META-INF/maven/org.jeecgframework/jeecg/pom.properties
 /target/
+
+.settings/.jsdtscope
+.settings/org.eclipse.m2e.core.prefs
+.settings/org.eclipse.wst.common.project.facet.core.xml
+.settings/org.eclipse.wst.validation.prefs
+.settings/org.eclipse.wst.common.project.facet.core.xml
