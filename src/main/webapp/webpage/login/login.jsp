@@ -11,7 +11,7 @@ String lhgdialogTheme = SysThemesUtil.getLhgdialogTheme(sysTheme);
 
 <html>
 <head>
-<title></title>
+<title>宜保通合作公司后台管理</title>
 <link rel="shortcut icon" href="resources/fc/images/icon/favicon.ico">
 <script src=<%=langurl%> type="text/javascript"></script>
 <!--[if lt IE 9]>
