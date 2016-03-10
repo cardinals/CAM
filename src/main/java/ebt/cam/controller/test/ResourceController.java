@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeecgframework.core.util.DynamicDBUtil;
-import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ebt.cam.entity.test.Message;
 import ebt.cam.entity.test.Resource;
-import ebt.cam.entity.test.TestEntity;
 import ebt.cam.service.test.ResourceService;
 
 
