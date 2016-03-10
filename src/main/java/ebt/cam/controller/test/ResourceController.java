@@ -1,6 +1,11 @@
 package ebt.cam.controller.test;
 
 
+import java.util.List;
+import java.util.Map;
+
+import org.jeecgframework.core.util.DynamicDBUtil;
+import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ebt.cam.entity.test.Message;
 import ebt.cam.entity.test.Resource;
+import ebt.cam.entity.test.TestEntity;
 import ebt.cam.service.test.ResourceService;
 
 
@@ -36,9 +42,12 @@ public class ResourceController {
 	 */
 	@RequestMapping(value="/get/{id}" , method=RequestMethod.GET)
 	@ResponseBody
-	public String get(@PathVariable("id") String id , ModelMap model){
+	public List<Map<String, Object>> get(@PathVariable("id") String id , ModelMap model){
 		model.put("resource", service.getResource(id));
-		return "resource";
+		//动态数据源测试
+		final String sql = "select * from person";
+		List<Map<String, Object>> listUsers =  DynamicDBUtil.findList("CAM_DB", sql, null);
+		return listUsers;
 	}
 	
 	/**
