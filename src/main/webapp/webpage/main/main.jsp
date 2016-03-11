@@ -228,7 +228,7 @@ a:hover {
     <div align="center" style="color: #CC99FF; padding-top: 2px">&copy;
         <t:mutiLang langKey="common.copyright"/>
         <span class="tip">
-            <a href="http://www.jeecg.org" title=" JEECG Framework -3.6"> JEECG Framework -3.6</a>
+            <a href="http://www.e-baotong.cn/" title="易保网通"> 深圳市易保网通科技有限公司</a>
             <t:mutiLang langKey="common.copyright"/>:
             <a href="#" title=" JEECG Framework -3.6">JEECG Framework -3.6</a>
         </span>

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2016-03-10 14:38:32
+Date: 2016-03-11 14:34:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2154,6 +2154,19 @@ INSERT INTO `t_s_log` VALUES ('297ef5ff535f1ac601535f22cb200002', 'Chrome', '用
 INSERT INTO `t_s_log` VALUES ('297ef5ff535f1ac601535f22f8840003', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 14:07:20', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('297ef5ff535f1ac601535f29ecab0004', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 14:14:56', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('297ef5ff535f1ac601535f2cb2770005', 'Chrome', '多数据源管理 更新成功', '5', '169.254.117.127', '2016-03-10 14:17:58', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535f646c01535f65d6190000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 15:20:22', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535f646c01535f6610ef0001', 'Chrome', '用户admin已退出', '2', '169.254.117.127', '2016-03-10 15:20:37', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535f6b3c01535f6debca0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 15:29:12', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535f6b3c01535f6e9e070001', 'Chrome', '用户admin已退出', '2', '169.254.117.127', '2016-03-10 15:29:58', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535fdac301535fdb64700000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 17:28:46', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535fdac301535fdbf5d80001', 'Chrome', '用户admin已退出', '2', '169.254.117.127', '2016-03-10 17:29:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535fdac301535fdc2be50002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 17:29:38', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535ff30001535ff34bf70000', 'MSIE 9.0', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 17:54:53', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535ff30001535ff3acab0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 17:55:18', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535ff30001535ff47f830002', 'Chrome', '用户admin已退出', '2', '169.254.117.127', '2016-03-10 17:56:12', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535ff30001535ff4ac7f0003', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 17:56:23', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff535ff30001535ffc0a020004', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-10 18:04:26', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('297ef5ff5364548f015364551ce90000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '169.254.117.127', '2016-03-11 14:20:12', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('2c90e2064a9a8c11014a9a8f22cd0000', 'Chrome', '用户: admin[人力资源部]?common.login.success', '1', '172.16.98.134', '2014-12-30 17:37:59', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('2c90e4044ce0677f014ce06870420000', 'Chrome', '用户: admin[中国人寿总公司]?common.login.success', '1', '172.16.100.132', '2015-04-22 17:14:43', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('2c90e4624ce4cead014ce4d37e860000', 'Chrome', '用户: admin[中国人寿总公司]?common.login.success', '1', '172.16.100.226', '2015-04-23 13:50:08', '1', '8a8ab0b246dc81120146dc8181950052');
@@ -4974,8 +4987,8 @@ INSERT INTO `t_s_muti_lang` VALUES ('402881c347203fcc0147204d69020009', 'input.e
 INSERT INTO `t_s_muti_lang` VALUES ('402881c347203fcc0147204d9ef9000b', 'input.error', 'Input error', 'en', '2014-07-10 20:44:23', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-07-10 20:44:23', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('402881c347205fc0014720704aa50001', 'menuname.rang4to15', '菜单名称范围4~15位字符,且不为空', 'zh-cn', '2014-07-10 21:22:15', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-07-10 21:22:15', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('402881c347205fc0014720718d360003', 'menuname.rang4to15', 'Menu name should be 4-15 characters and should not empty', 'en', '2014-07-10 21:23:38', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-07-10 21:23:38', 'admin', '管理员');
-INSERT INTO `t_s_muti_lang` VALUES ('402881c347205fc001472082f5130005', 'jeect.platform', 'Jeecg 快速开发平台', 'zh-cn', '2014-07-10 21:42:39', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-07-10 21:42:39', 'admin', '管理员');
-INSERT INTO `t_s_muti_lang` VALUES ('402881c347205fc00147208321e10007', 'jeect.platform', 'Jeecg Quckly Platform', 'en', '2014-07-10 21:42:50', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-07-10 21:42:50', 'admin', '管理员');
+INSERT INTO `t_s_muti_lang` VALUES ('402881c347205fc001472082f5130005', 'jeect.platform', '宜保通合作公司后台管理系统', 'zh-cn', '2014-07-10 21:42:39', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-07-10 21:42:39', 'admin', '管理员');
+INSERT INTO `t_s_muti_lang` VALUES ('402881c347205fc00147208321e10007', 'jeect.platform', 'CAM', 'en', '2014-07-10 21:42:50', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-07-10 21:42:50', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('402881e446f486df0146f49af73f0001', 'pk.strategies', 'Primary key strategies', 'en', '2014-07-02 09:05:35', '402881e946e70d550146e70fa0680086', 'admin', '2014-07-02 09:05:35', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('402881e446f486df0146f49c57320003', 'pk.strategies', '主键策略', 'zh-cn', '2014-07-02 09:07:05', '402881e946e70d550146e70fa0680086', 'admin', '2014-07-02 09:07:05', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('402881e446f5ec0b0146f5f492d60001', 'table.name', '表名', 'zh-cn', '2014-07-02 15:23:04', '402881e946e70d550146e70fa0680086', 'admin', '2014-07-02 15:23:04', 'admin', '管理员');
@@ -5172,8 +5185,8 @@ INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c18cdc0146c1a5edff0019', 'common.
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c18cdc0146c1a60dff001b', 'common.exit', 'Exit', 'en', '2014-06-22 11:37:03', 'admin', '管理员', '2014-06-22 11:37:03', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c18cdc0146c1a85f8e001d', 'common.user', 'User', 'en', '2014-06-22 11:39:35', 'admin', '管理员', '2014-06-22 11:39:35', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c18cdc0146c1a88d9b001f', 'common.user', '用户', 'zh-cn', '2014-06-22 11:39:47', 'admin', '管理员', '2014-06-22 11:39:47', 'admin', '管理员');
-INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c18cdc0146c1aae98c0025', 'common.platform', 'JEECG 演示系统', 'zh-cn', '2014-06-22 11:42:22', 'admin', '管理员', '2014-06-22 11:42:22', 'admin', '管理员');
-INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c18cdc0146c1ab90ac0027', 'common.platform', 'JEECG Platform', 'en', '2014-06-22 11:43:04', 'admin', '管理员', '2014-06-22 11:43:04', 'admin', '管理员');
+INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c18cdc0146c1aae98c0025', 'common.platform', '宜保通合作公司后台管理系统', 'zh-cn', '2014-06-22 11:42:22', 'admin', '管理员', '2014-06-22 11:42:22', 'admin', '管理员');
+INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c18cdc0146c1ab90ac0027', 'common.platform', 'CAM', 'en', '2014-06-22 11:43:04', 'admin', '管理员', '2014-06-22 11:43:04', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c1e09ce00017', 'lang.maintain', '语言信息维护', 'zh-cn', '2014-06-22 12:41:01', 'admin', '管理员', '2014-06-22 12:41:01', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c1e0f0780019', 'lang.maintain', 'Language Maintain', 'en', '2014-06-22 12:41:22', 'admin', '管理员', '2014-06-23 13:37:39', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c1ea9872002b', 'online.develop', 'Online Develop', 'en', '2014-06-22 12:51:55', 'admin', '管理员', '2014-06-22 12:51:55', 'admin', '管理员');
@@ -5190,8 +5203,8 @@ INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c1ef4206003f', 'workflo
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c1ef78d20041', 'workflow.manage', 'Workflow Manage', 'en', '2014-06-22 12:57:15', 'admin', '管理员', '2014-06-22 12:57:15', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c1fe512f0045', 'common.change.password', '修改密码', 'zh-cn', '2014-06-22 13:13:28', 'admin', '管理员', '2014-06-22 13:13:28', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c1fe90260047', 'common.change.password', 'Change Password', 'en', '2014-06-22 13:13:44', 'admin', '管理员', '2014-06-22 13:13:44', 'admin', '管理员');
-INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c202c92c0049', 'common.copyright', 'JEECG 版权所有', 'zh-cn', '2014-06-22 13:18:20', 'admin', '管理员', '2014-06-23 11:01:46', 'admin', '管理员');
-INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c203cd8d004b', 'common.copyright', 'JEEECT Copyright Reserved', 'en', '2014-06-22 13:19:27', 'admin', '管理员', '2014-06-22 13:19:27', 'admin', '管理员');
+INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c202c92c0049', 'common.copyright', 'CAM 版权所有', 'zh-cn', '2014-06-22 13:18:20', 'admin', '管理员', '2014-06-23 11:01:46', 'admin', '管理员');
+INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c203cd8d004b', 'common.copyright', 'CAM Copyright Reserved', 'en', '2014-06-22 13:19:27', 'admin', '管理员', '2014-06-22 13:19:27', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c20508bf004d', 'common.refresh', '刷新缓存', 'zh-cn', '2014-06-22 13:20:48', 'admin', '管理员', '2014-06-22 13:20:48', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c2053659004f', 'common.refresh', 'Refresh', 'en', '2014-06-22 13:20:59', 'admin', '管理员', '2014-06-22 13:20:59', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('4028fc5346c1aec50146c2057c580051', 'common.close', 'Close', 'en', '2014-06-22 13:21:17', 'admin', '管理员', '2014-06-22 13:21:17', 'admin', '管理员');
@@ -5403,11 +5416,11 @@ INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c6430510011', 'common.
 INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c6456940013', 'common.dbpassword', 'DB Password', 'en', '2014-09-16 10:57:03', '8a8ab0b246dc81120146dc8181950052', 'admin', null, null, null);
 INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c66d45d0015', 'common.dbtype', '数据库类型', 'zh-cn', '2014-09-16 10:59:46', '8a8ab0b246dc81120146dc8181950052', 'admin', null, null, null);
 INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c66ffe00017', 'common.dbtype', 'DB Type', 'en', '2014-09-16 10:59:58', '8a8ab0b246dc81120146dc8181950052', 'admin', null, null, null);
-INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c79d0660021', 'common.oracle', '甲骨文Oracle数据库', 'zh-cn', '2014-09-16 11:20:31', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-09-16 11:21:58', 'admin', '管理员');
+INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c79d0660021', 'common.oracle', 'Oracle数据库', 'zh-cn', '2014-09-16 11:20:31', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-09-16 11:21:58', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c7aee7b0024', 'common.oracle', 'Oracle', 'en', '2014-09-16 11:21:44', '8a8ab0b246dc81120146dc8181950052', 'admin', null, null, null);
-INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c8f0bfc0027', 'common.sqlserver2008', '微软SQL Server2008', 'zh-cn', '2014-09-16 11:43:42', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-09-16 11:48:44', 'admin', '管理员');
+INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c8f0bfc0027', 'common.sqlserver2008', 'SQL Server2008数据库', 'zh-cn', '2014-09-16 11:43:42', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-09-16 11:48:44', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c8f57910029', 'common.sqlserver2008', 'SQL Server2008', 'en', '2014-09-16 11:44:01', '8a8ab0b246dc81120146dc8181950052', 'admin', null, null, null);
-INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c94614b002d', 'common.mysql', '甲骨文MySQL', 'zh-cn', '2014-09-16 11:49:32', '8a8ab0b246dc81120146dc8181950052', 'admin', null, null, null);
+INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c94614b002d', 'common.mysql', 'MySQL数据库', 'zh-cn', '2014-09-16 11:49:32', '8a8ab0b246dc81120146dc8181950052', 'admin', null, null, null);
 INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0ba487c527201487c948fc0002f', 'common.mysql', 'MySQL', 'en', '2014-09-16 11:49:44', '8a8ab0b246dc81120146dc8181950052', 'admin', null, null, null);
 INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0c34761c347014761dfb98c0001', 'common.english', 'English', 'en', '2014-07-23 14:19:17', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-07-23 14:19:17', 'admin', '管理员');
 INSERT INTO `t_s_muti_lang` VALUES ('8a8ab0c34761c347014761dfde030003', 'common.english', 'English', 'zh-cn', '2014-07-23 14:19:27', '8a8ab0b246dc81120146dc8181950052', 'admin', '2014-07-25 08:51:07', '8a8ab0b246dc81120146dc8181950052', 'admin');
