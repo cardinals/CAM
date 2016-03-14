@@ -133,9 +133,11 @@ public class DepartController extends BaseController {
                 systemService.delete(depart);
 
                 systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
+            }else{
+            	message = MutiLangUtil.paramDelFail("common.department,，该组织下存在成员！");
             }
         } else {
-            message = MutiLangUtil.paramDelFail("common.department");
+            message = MutiLangUtil.paramDelFail("common.department,，请逐级删除！");
         }
 
         j.setMsg(message);
