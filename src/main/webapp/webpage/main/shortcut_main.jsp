@@ -5,7 +5,7 @@
 <head>
 <title><t:mutiLang langKey="jeect.platform"/></title>
 <t:base type="jquery,easyui,tools,DatePicker,autocomplete"></t:base>
-<link rel="shortcut icon" href="images/favicon.ico">
+<link rel="shortcut icon" href="favicon.ico">
 <style type="text/css">
 a {
 	color: Black;

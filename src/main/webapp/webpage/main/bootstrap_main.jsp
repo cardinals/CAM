@@ -5,6 +5,7 @@
 <head>
 <title><t:mutiLang langKey="jeect.platform"/></title>
 <t:base type="jquery,easyui,tools,DatePicker,autocomplete"></t:base>
+<link rel="shortcut icon" href="favicon.ico">
 <link rel="stylesheet" href="plug-in/bootstrap/css/bootstrap.css" type="text/css"></link>
 <style type="text/css">
 .bootstrap-menu i {

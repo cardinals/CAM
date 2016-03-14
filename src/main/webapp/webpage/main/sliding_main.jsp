@@ -5,7 +5,7 @@
 	<head>
 		<title>JEECG 微云快速开发平台</title>
 <t:base type="jquery-webos,easyui,tools,DatePicker,autocomplete"></t:base>
-<link rel="shortcut icon" href="images/favicon.ico">
+<link rel="shortcut icon" href="favicon.ico">
 		<link href="plug-in/sliding/css/main.css" rel="stylesheet" type="text/css" />
 		<link href="plug-in/sliding/css/themesetting.css" rel="stylesheet"  type="text/css" >
 		<link href="plug-in/sliding/css/skins/black.css" rel="stylesheet" />
