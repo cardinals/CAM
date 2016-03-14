@@ -129,7 +129,7 @@ label.iPhoneCheckLabelOn span {
     <!--Login div-->
     <div class="clear"></div>
     <div id="versionBar">
-        <div class="copyright">&copy; <t:mutiLang langKey="common.copyright"/> <span class="tip"><a href="http://www.jeecg.org"  target="_blank" title=<t:mutiLang langKey="common.platform"/>>jeecg</a> <t:mutiLang langKey="common.browser.recommend"/><a href="http://www.jeecg.org" target="_blank" title=<t:mutiLang langKey="common.platform"/>> Jeecg社区</a></span></div>
+        <div class="copyright">&copy; <t:mutiLang langKey="common.copyright"/> <span class="tip"><a href="http://www.jeecg.org"  target="_blank" title=<t:mutiLang langKey="common.platform"/>>深圳市易保网通科技有限公司</a> <t:mutiLang langKey="common.browser.recommend"/><a href="http://www.jeecg.org" target="_blank" title=<t:mutiLang langKey="common.platform"/>> Jeecg社区</a></span></div>
     </div>
     <!-- Link JScript-->
     <script type="text/javascript" src="plug-in/jquery/jquery-1.8.3.min.js"></script>

@@ -49,7 +49,6 @@ public class UserController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(UserController.class);
 
 	private UserService userService;
@@ -78,7 +77,7 @@ public class UserController extends BaseController {
 		SetListSort sort = new SetListSort();
 		TSUser u = ResourceUtil.getSessionUserName();
 		// 登陆者的权限
-		Set<TSFunction> loginActionlist = new HashSet();// 已有权限菜单
+		Set<TSFunction> loginActionlist = new HashSet<TSFunction>();// 已有权限菜单
 		List<TSRoleUser> rUsers = systemService.findByProperty(TSRoleUser.class, "TSUser.id", u.getId());
 		for (TSRoleUser ru : rUsers) {
 			TSRole role = ru.getTSRole();
@@ -90,8 +89,8 @@ public class UserController extends BaseController {
 				}
 			}
 		}
-		List<TSFunction> bigActionlist = new ArrayList();// 一级权限菜单
-		List<TSFunction> smailActionlist = new ArrayList();// 二级权限菜单
+		List<TSFunction> bigActionlist = new ArrayList<TSFunction>();// 一级权限菜单
+		List<TSFunction> smailActionlist = new ArrayList<TSFunction>();// 二级权限菜单
 		if (loginActionlist.size() > 0) {
 			for (TSFunction function : loginActionlist) {
 				if (function.getFunctionLevel() == 0) {
@@ -208,7 +207,7 @@ public class UserController extends BaseController {
 			user = systemService.getEntity(TSUser.class, user.getId());
 			req.setAttribute("user", user);
 			idandname(req, user);
-			System.out.println(user.getPassword()+"-----"+user.getRealName());
+			//System.out.println(user.getPassword()+"-----"+user.getRealName());
 		}
 		return new ModelAndView("system/user/adminchangepwd");
 	}
@@ -223,7 +222,7 @@ public class UserController extends BaseController {
 		String password = oConvertUtils.getString(req.getParameter("password"));
 		if (StringUtil.isNotEmpty(id)) {
 			TSUser users = systemService.getEntity(TSUser.class,id);
-			System.out.println(users.getUserName());
+			//System.out.println(users.getUserName());
 			users.setPassword(PasswordUtil.encrypt(users.getUserName(), password, PasswordUtil.getStaticSalt()));
 			users.setStatus(Globals.User_Normal);
 			users.setActivitiSync(users.getActivitiSync());
@@ -282,7 +281,7 @@ public class UserController extends BaseController {
 	public List<ComboBox> role(HttpServletResponse response, HttpServletRequest request, ComboBox comboBox) {
 		String id = request.getParameter("id");
 		List<ComboBox> comboBoxs = new ArrayList<ComboBox>();
-		List<TSRole> roles = new ArrayList();
+		List<TSRole> roles = new ArrayList<TSRole>();
 		if (StringUtil.isNotEmpty(id)) {
 			List<TSRoleUser> roleUser = systemService.findByProperty(TSRoleUser.class, "TSUser.id", id);
 			if (roleUser.size() > 0) {
@@ -306,7 +305,7 @@ public class UserController extends BaseController {
 	public List<ComboBox> depart(HttpServletResponse response, HttpServletRequest request, ComboBox comboBox) {
 		String id = request.getParameter("id");
 		List<ComboBox> comboBoxs = new ArrayList<ComboBox>();
-		List<TSDepart> departs = new ArrayList();
+		List<TSDepart> departs = new ArrayList<TSDepart>();
 		if (StringUtil.isNotEmpty(id)) {
 			TSUser user = systemService.get(TSUser.class, id);
 //			if (user.getTSDepart() != null) {
@@ -396,10 +395,12 @@ public class UserController extends BaseController {
 				// 删除用户时先删除用户和角色关系表
 				delRoleUser(user);
                 systemService.executeSql("delete from t_s_user_org where user_id=?", user.getId()); // 删除 用户-机构 数据
+                systemService.executeSql("delete from t_s_log where userid=?", user.getId()); // 删除 用户-产生的日志 数据
                 userService.delete(user);
 				message = "用户：" + user.getUserName() + "删除成功";
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			} else {
+				systemService.executeSql("delete from t_s_log where userid=?", user.getId()); // 删除 用户-产生的日志 数据
 				userService.delete(user);
 				message = "用户：" + user.getUserName() + "删除成功";
 			}
