@@ -12,7 +12,6 @@ import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.jeecgframework.web.system.service.UserService;
 
 import org.jeecgframework.core.beanvalidator.BeanValidators;
-import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.constant.Globals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -46,6 +45,7 @@ public class UserRestController {
 	//get User 列表     路径  /rest/user
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
+	//访问地址：http://localhost:8080/jeecg/rest/user
 	public List<TSUser> list() {
 		List<TSUser> listUsers = userService.getList(TSUser.class);
 		return listUsers;
@@ -57,9 +57,9 @@ public class UserRestController {
 	public ResponseEntity<?> get(@PathVariable("id") String id) {
 		TSUser user = userService.get(TSUser.class, id);
 		if (user == null) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity(user, HttpStatus.OK);
+		return new ResponseEntity<Object>(user, HttpStatus.OK);
 	}
 
 	//post 保存用户  
@@ -69,7 +69,7 @@ public class UserRestController {
 		// 调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
 		Set<ConstraintViolation<TSUser>> failures = validator.validate(user);
 		if (!failures.isEmpty()) {
-			return new ResponseEntity(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
 		}
 		// 保存用户
 		userService.save(user);
@@ -87,17 +87,18 @@ public class UserRestController {
 		// 调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
 		Set<ConstraintViolation<TSUser>> failures = validator.validate(user);
 		if (!failures.isEmpty()) {
-			return new ResponseEntity(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(BeanValidators.extractPropertyAndMessage(failures), HttpStatus.BAD_REQUEST);
 		}
 		// 保存
 		userService.saveOrUpdate(user);
 		// 按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
 	}
 
 	//删除用户
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+
 	public void delete(@PathVariable("id") String id) {
 		//userService.deleteEntityById(TSUser.class, id);	
 		TSUser user = userService.get(TSUser.class, id);

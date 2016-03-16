@@ -82,8 +82,8 @@
 <footer class="footer">
 <div class="container">
 <ul class="footer-links">
-	<li style="display: inline;">&copy; <t:mutiLang langKey="common.copyright"/><a href="http://www.e-baotong.cn/" title="易保网通">J深圳市易保网通科技有限公司</a></li>
-	<li style="display: inline;">&nbsp;<t:mutiLang langKey="common.copyright"/><t:mutiLang langKey="common.browser"/>:<a title="JEECG Framework -3.6" href="http://www.jeecg.org">JEECG Framework -3.6</a></li>
+	<li style="display: inline;">&copy; <t:mutiLang langKey="common.copyright"/><a href="http://www.e-baotong.cn/" title="易保网通">深圳市易保网通科技有限公司</a></li>
+	<li style="display: inline;">&nbsp;<t:mutiLang langKey="common.copyright"/><t:mutiLang langKey="common.browser"/>:<a title="JEECG Framework  <t:mutiLang langKey="system.version.number"/>" href="http://www.jeecg.org">JEECG Framework  <t:mutiLang langKey="system.version.number"/></a></li>
 </ul>
 </div>
 </footer>

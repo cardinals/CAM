@@ -14,7 +14,8 @@
 	<context:component-scan base-package="org.jeecgframework.core.common.dao.*" />
 	<context:component-scan base-package="org.jeecgframework.core.common.service.*" />
 	<context:component-scan base-package="ebt.cam.*" />
-	
+	<context:component-scan base-package="org.jeecgframework.web.image.service.*" />
+
 	<!-- 加载service,此时要排除要controller,因为controller已经spring-mvc中加载过了 -->
 	<context:component-scan base-package="org.jeecgframework.web.*">
 		<context:exclude-filter type="annotation"
@@ -102,9 +103,11 @@
 				<value>org.jeecgframework.web.test.entity.*</value>
 				<value>org.jeecgframework.web.cgform.entity.*</value>
 				<value>org.jeecgframework.web.cgreport.entity.*</value>
+				<value>org.jeecgframework.web.cgdynamgraph.entity.*</value>
 				<value>org.jeecgframework.web.rank.*</value>
 				<value>org.jeecgframework.web.sms.*</value>
 				<value>ebt.cam.*</value>
+				<value>org.jeecgframework.web.image.*</value>
 			</list>
 		</property>
 	</bean>

@@ -1,4 +1,6 @@
 ${config_iframe}
+
+<!--update-start--Author:luobaoli  Date:20150703 for：将本文档中所有href="#"修改为href="javascript:void(0)",避免rest风格下新增/删除等操作跳转到主页问题-->
 <script type="text/javascript">
 /**
 *表单的高度,表单的宽度
@@ -29,7 +31,7 @@ function createDataGrid${config_id}(){
 	fit:true,
 	fitColumns:true,
 	striped:true,
-	autoRowHeight:true,
+	autoRowHeight: true,
 	pageSize: 10,
 	<#if config_ispagination =="Y">pagination:true,</#if>
 	<#if config_ischeckbox=="Y">singleSelect:false,<#else>singleSelect:true,</#if>
@@ -80,6 +82,21 @@ function createDataGrid${config_id}(){
 						 		return href;
 						 	},
 						 	</#if>
+						 	<#-- update-start--Author: jg_huangxg  Date:20160113 for：TASK #824 【online开发】控件类型扩展增加一个图片类型 image -->
+						 	<#if x['field_showType']=="image">
+						 	formatter:function(value,rec,index){
+						 		var href='';
+						 		if(value==null || value.length==0){
+						 			return href;
+						 		}
+						 		href+="<img src='"+value+"' width=100 height=50/>";
+						 		return href;
+						 	},
+						 	styler: function(value,row,index){
+								return 'text-align: center;';
+						 	},
+						 	</#if>
+						 	<#-- update-end--Author: jg_huangxg  Date:20160113 for：TASK #824 【online开发】控件类型扩展增加一个图片类型 image -->
 						 	sortable:true,
 						 	width:${x['field_length']}
 						 	},
@@ -262,22 +279,29 @@ function createDataGrid${config_id}(){
 		url = url + '&id='+rowData;
 		createdialog('确认 ', '确定'+content+'吗 ?', url,gridname);
 	}
+    //----author:jg_xugj---start----date:20151219-------- for：#813 【online表单】扩展出三个请求：独立的添加、查看、编辑请求，原来的保留
 	//新增
 	function ${config_id}add(){
+
 		//add('${config_name}录入','rest/cgform/form/${config_id}','${config_id}List',${config_id}Fw,${config_id}Fh);
+
 		
-		add('${config_name}录入','cgFormBuildController.do?ftlForm&tableName=${config_id}&olstylecode=${_olstylecode}','${config_id}List',${config_id}Fw,${config_id}Fh);
+		add('${config_name}录入','cgFormBuildController.do?goAddFtlForm&tableName=${config_id}&olstylecode=${_olstylecode}','${config_id}List',${config_id}Fw,${config_id}Fh);
 	}
 	//修改
 	function ${config_id}update(){
+
 		//update('${config_name}编辑','rest/cgform/form/${config_id}','${config_id}List',${config_id}Fw,${config_id}Fh,true);
+
 		
-		update('${config_name}编辑','cgFormBuildController.do?ftlForm&tableName=${config_id}&olstylecode=${_olstylecode}','${config_id}List',${config_id}Fw,${config_id}Fh);
+		update('${config_name}编辑','cgFormBuildController.do?goUpdateFtlForm&tableName=${config_id}&olstylecode=${_olstylecode}','${config_id}List',${config_id}Fw,${config_id}Fh);
 	}
 	//查看
 	function ${config_id}view(){
-		detail('查看','cgFormBuildController.do?ftlForm&tableName=${config_id}&mode=read&olstylecode=${_olstylecode}','${config_id}List',${config_id}Fw,${config_id}Fh);
+		detail('查看','cgFormBuildController.do?goDatilFtlForm&tableName=${config_id}&mode=read&olstylecode=${_olstylecode}','${config_id}List',${config_id}Fw,${config_id}Fh);
 	}
+    //----author:jg_xugj---end----date:20151219-------- for：#813 【online表单】扩展出三个请求：独立的添加、查看、编辑请求，原来的保留
+	
 	
 	//批量删除
 	function ${config_id}delBatch(){
