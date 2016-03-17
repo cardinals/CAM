@@ -30,7 +30,7 @@
 <form action="loginController.do?login" check="loginController.do?checkuser" method="post">
 <div align="center" class="container loginBg">
 	<div class="language">
-    	<span>Language：</span>
+    	<span>语言：</span>
         <t:dictSelect id="langCode" field="langCode" typeGroupCode="lang" hasLabel="false" defaultVal="zh-cn"></t:dictSelect>
 
 
@@ -39,8 +39,8 @@
 
     <div class="login">
     	<ul class="titleName">
-        	<li class="english">JEECG|BPMN</li>
-            <li class="chinese">演示系统</li>
+        	<li class="english">CAM|EMMS</li>
+            <li class="chinese">后台管理系统</li>
         </ul>
         <ul class="loginInfo">
             <li>
@@ -75,7 +75,7 @@
     </div>
 
     <div class="copyright ">
-    	<span>&copy; JEECG 版权所有 <span class="tip"><a href="#" title=JEECG 演示系统>jeecg</a> (推荐使用IE8+,谷歌浏览器) 技术支持：:<a href="#" title=JEECG 演示系统>jeecg</a></span></span>
+    	<span>&copy; CAM 版权所有 <span class="tip"><a href="#" title="深圳市易保网通科技有限公司">易保网通</a> (推荐使用IE8+,谷歌浏览器) 技术支持：:<a href="#" title=JEECG 演示系统>jeecg</a></span></span>
     </div>       
 </div>
 </form>
