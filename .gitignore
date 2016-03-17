@@ -75,10 +75,11 @@ target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 target/m2e-wtp/web-resources/META-INF/maven/org.jeecgframework/jeecg/pom.properties
 .settings/org.eclipse.core.resources.prefs
 target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
-target/
+
 *.classpath
 .project
 .settings/org.eclipse.jdt.core.prefs
 .settings/org.eclipse.wst.jsdt.ui.superType.name
 *.container
 .settings/org.eclipse.wst.common.component
+/.settings/
