@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeecgframework.core.util.DynamicDBUtil;
+import org.jeecgframework.core.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -62,7 +63,7 @@ public class ResourceController {
 	@RequestMapping(value="/put" , method=RequestMethod.PUT)
 	public @ResponseBody Message put(Resource resource , ModelMap model){
 		Message message = new Message();
-		if(resource.getId()==null || "".equals(resource.getId()) || resource.getName()==null || "".equals(resource.getName())){
+		if(StringUtil.isEmpty(resource.getId())|| StringUtil.isEmpty(resource.getName())){
 			message.setMsg("请输入id 和 用户名");
 			message.setResult("faile");
 			return message;
@@ -84,7 +85,7 @@ public class ResourceController {
 	@RequestMapping(value="/post" , method=RequestMethod.POST)
 	public @ResponseBody Message post(Resource resource , ModelMap model){
 		Message message = new Message();
-		if(resource.getId()==null || "".equals(resource.getId())){
+		if( StringUtil.isEmpty(resource.getId())){
 			message.setMsg("id不能为空");
 			message.setResult("faile");
 			return message;
