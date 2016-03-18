@@ -94,7 +94,7 @@
 		<groovy.version>2.3.3</groovy.version>
         <!--poi 工具类 -->
         <easypoi.version>2.1.4</easypoi.version>
-		<cxf.version>3.0.2</cxf.version>
+		<cxf.version>3.0.8</cxf.version>
 	</properties>
 
 	<repositories>
