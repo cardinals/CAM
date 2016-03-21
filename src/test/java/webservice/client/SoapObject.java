@@ -5,13 +5,11 @@ import java.net.UnknownHostException;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
@@ -150,8 +148,8 @@ public class SoapObject {
 
 		// the entity holds the request 54:
 		// HttpEntity entity = new StringEntity(envelope); 55:
-		HttpEntity entity = new ByteArrayEntity(this.soapHeader.toString()
-				.getBytes("UTF-8"));
+//		HttpEntity entity = new ByteArrayEntity(this.soapHeader.toString()
+//				.getBytes("UTF-8"));
 
 		StringEntity entiy = new StringEntity(soapHeader.toString(), "UTF-8");
 		httppost.setEntity(entiy);

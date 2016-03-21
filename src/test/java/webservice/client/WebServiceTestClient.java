@@ -2,29 +2,12 @@ package webservice.client;
 
 import java.util.HashMap;
 
-import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-
-import webservice.cn.ebao.blog.BlogSoap;
-
-
 public class WebServiceTestClient {
-	public static void main1(String[] args) {
-		String address = "http://blog.e-baotong.cn/ws/blog.asmx"; //此处最好用系统参数
-		JaxWsProxyFactoryBean bean = new JaxWsProxyFactoryBean();
-		bean.setAddress(address);
-		bean.setServiceClass(BlogSoap.class);
-		BlogSoap ws = (BlogSoap) bean.create();
-		System.out.println(ws.helloWorld());
-	}
-	
 	public static void main(String[] args) {
-		String url = "http://uacserver.e-bao.cn:8086/UACService.asmx"; 
-		String xmlns = "http://www.songlink.uac.cn/"; 
-		String method= "GetUserKey";
-		
-		String user = "18363920690";
-		String pwd = "12345678";
-		
+		String url = "http://localhost:54918/WebService/CAMServices.asmx"; 
+		String xmlns = "http://www.e-bao.cn/"; 
+		String method= "CompanyVerify";
+				
 		String result = "";
 
 		SoapObject soapobj = new SoapObject(
@@ -35,8 +18,18 @@ public class WebServiceTestClient {
 		soapobj.setMethod(method);
 		HashMap<String, String> pams = new HashMap<String, String>();
 
-		pams.put("user", user);
-		pams.put("password", pwd);
+		String CompanyCode = "abc1201";
+		String UserName = "admin";
+		String Password = "123456";
+		String SoapHeaderUser = "CASClient";
+		String SoapHeaderSign = "adbb683698744f8643d144091a71e040";
+		
+		pams.put("CompanyCode", CompanyCode);
+		pams.put("UserName", UserName);
+		pams.put("Password", Password);
+		pams.put("SoapHeaderUser", SoapHeaderUser);
+		pams.put("SoapHeaderSign", SoapHeaderSign);
+		
 		soapobj.setParams(pams);
 		try {
 			result = soapobj.sendRequest();
