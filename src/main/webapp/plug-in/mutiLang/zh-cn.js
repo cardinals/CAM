@@ -1,11 +1,13 @@
 var loading = "页面加载中......";
 var load = "加载中...";
 var checking = "核实中..";
-var pleaseinutusername = "请输入用户名!";
-var pleaseinutpassword = "请输入密码!";
+var pleaseinputcompanycode = "请输入公司编码!";
+var pleaseinputusername = "请输入用户名!";
+var pleaseinputpassword = "请输入密码!";
 var yes = "是";
 var no = "否";
 var selectedlanguage = "请选择语言";
+var companycode = "公司编码";
 var username = "用户名";
 var password = "密码";
 var foot = "(推荐使用IE8+,谷歌浏览器可以获得更快,更安全的页面响应速度) 技术支持：孙波 13912756186";

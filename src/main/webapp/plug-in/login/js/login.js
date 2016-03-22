@@ -1,9 +1,11 @@
 $(document).ready(function() {
+	$("#companyCode").attr("nullmsg",pleaseinputcompanycode);
+	$("#companyCode").attr("title",companycode);
 	
-	$("#userName").attr("nullmsg",pleaseinutusername);
+	$("#userName").attr("nullmsg",pleaseinputusername);
 	$("#userName").attr("title",username);
 	
-	$("#password").attr("nullmsg",pleaseinutpassword);
+	$("#password").attr("nullmsg",pleaseinputpassword);
 	$("#password").attr("title",password);
 	
 	$("#randCode").attr("nullmsg",pleaseinputvalidatecode);

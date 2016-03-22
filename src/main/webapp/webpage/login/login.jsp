@@ -84,10 +84,13 @@ label.iPhoneCheckLabelOn span {
                 <form name="formLogin" id="formLogin" action="loginController.do?login" check="loginController.do?checkuser" method="post">
                     <input name="userKey" type="hidden" id="userKey" value="D1B5CC2FE46C4CC983C073BCA897935608D926CD32992B5900" />
                     <div class="tip">
-                        <input class="userName" name="userName" type="text" id="userName" title="" iscookie="true" value="admin" nullmsg="" />
+                        <input class="companyCode" name="companyCode" type="text" id="companyCode" title="" iscookie="true" value="" nullmsg="" />
                     </div>
                     <div class="tip">
-                        <input class="password" name="password" type="password" id="password" title="" value="123456" nullmsg="" />
+                        <input class="userName" name="userName" type="text" id="userName" title="" iscookie="true" value="" nullmsg="" />
+                    </div>
+                    <div class="tip">
+                        <input class="password" name="password" type="password" id="password" title="" value="" nullmsg="" />
                     </div>
                     <%--update-begin--Author:zhangguoming  Date:20140226 for：添加验证码--%>
                     <div>
@@ -122,7 +125,7 @@ label.iPhoneCheckLabelOn span {
                     </div>
                     <div>
                         <div style="float: right; margin-left:-30px; margin-right: 40px;">
-                           	 技术支持： <font color="red">JEECG开源社区</font>   &nbsp;&nbsp;&nbsp;  QQ群: <font color="red">106838471</font> &nbsp;&nbsp;&nbsp;  官网: <font color="red"><a href="http://www.jeecg.org"  target="_blank" >www.jeecg.org</a></font> 
+                           	 技术支持： <font color="red">深圳市易保网通科技有限公司</font>   &nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;  官网: <font color="red"><a href="http://www.e-baotong.cn"  target="_blank" >www.e-baotong.cn</a></font> 
                         </div>
                     </div>
                 </form>
@@ -133,7 +136,7 @@ label.iPhoneCheckLabelOn span {
     <!--Login div-->
     <div class="clear"></div>
     <div id="versionBar">
-        <div class="copyright">&copy; <t:mutiLang langKey="common.copyright"/> <span class="tip"><a href="http://www.jeecg.org"  target="_blank" title=<t:mutiLang langKey="common.platform"/>>深圳市易保网通科技有限公司</a> <t:mutiLang langKey="common.browser.recommend"/><a href="http://www.jeecg.org" target="_blank" title=<t:mutiLang langKey="common.platform"/>> Jeecg社区</a></span></div>
+        <div class="copyright">&copy; <t:mutiLang langKey="common.copyright"/> <span class="tip"><a href="http://www.e-baotong.cn"  target="_blank" title=<t:mutiLang langKey="common.platform"/>>深圳市易保网通科技有限公司</a> <t:mutiLang langKey="common.browser.recommend"/> <a href="http://www.e-bao.cn" target="_blank" title=<t:mutiLang langKey="common.platform"/>>易保网通</a></span></div>
     </div>
     <!-- Link JScript-->
     <script type="text/javascript" src="plug-in/jquery/jquery-1.8.3.min.js"></script>

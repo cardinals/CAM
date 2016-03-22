@@ -1,11 +1,13 @@
 var loading = "Page Loading...";
 var load = "load...";
 var checking = "checking...";
-var pleaseinutusername = "Please input user name!";
-var pleaseinutpassword = "Please input password!";
+var pleaseinputcompanycode = "Please input company code!";
+var pleaseinputusername = "Please input user name!";
+var pleaseinputpassword = "Please input password!";
 var yes = "Yes";
 var no = "No";
 var selectedlanguage = "Please select a language";
+var companycode = "Company Code";
 var username = "User Name";
 var password = "Password";
 var foot = "(Recommend IE+, Google browser) Support: Bob 13912756186";	
