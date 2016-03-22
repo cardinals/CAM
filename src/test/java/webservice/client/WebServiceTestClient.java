@@ -2,7 +2,9 @@ package webservice.client;
 
 import java.util.HashMap;
 
-import org.jeecgframework.core.util.SoapObject;
+import org.jeecgframework.core.util.WebServiceUtil;
+
+import net.sf.json.JSONObject;
 
 public class WebServiceTestClient {
 	public static void main(String[] args) {
@@ -12,12 +14,6 @@ public class WebServiceTestClient {
 				
 		String result = "";
 
-		SoapObject soapobj = new SoapObject(
-				xmlns, "", "");
-		soapobj.setWsURL(url);//
-		soapobj.setSoapAction(xmlns);
-
-		soapobj.setMethod(method);
 		HashMap<String, String> pams = new HashMap<String, String>();
 
 		String CompanyCode = "abc1201";
@@ -32,12 +28,10 @@ public class WebServiceTestClient {
 		pams.put("SoapHeaderUser", SoapHeaderUser);
 		pams.put("SoapHeaderSign", SoapHeaderSign);
 		
-		soapobj.setParams(pams);
-		try {
-			result = soapobj.sendRequest();
-			System.out.println(result);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		result = WebServiceUtil.SoapWebservice(url, xmlns, method, pams, "", "");
+		JSONObject jsonObject = JSONObject.fromObject(result);
+		
+		System.out.println(jsonObject.get("CorpCompanyName").toString());		
 	}
+	
 }
