@@ -230,7 +230,7 @@ a:hover {
         <span class="tip">
             <a href="http://www.e-baotong.cn/" title="易保网通"> 深圳市易保网通科技有限公司</a>
             <t:mutiLang langKey="common.copyright"/>:
-            <a href="#" title=" JEECG Framework  <t:mutiLang langKey="system.version.number"/>">JEECG Framework  <t:mutiLang langKey="system.version.number"/></a>
+            <a href="#" title=" CAM Framework  <t:mutiLang langKey="system.version.number"/>">CAM Framework  <t:mutiLang langKey="system.version.number"/></a>
         </span>
     </div>
 </div>

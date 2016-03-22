@@ -75,7 +75,7 @@
     </div>
 
     <div class="copyright ">
-    	<span>&copy; CAM 版权所有 <span class="tip"><a href="#" title="深圳市易保网通科技有限公司">易保网通</a> (推荐使用IE8+,谷歌浏览器) 技术支持：:<a href="#" title=JEECG 演示系统>jeecg</a></span></span>
+    	<span>&copy; CAM 版权所有 <span class="tip"><a href="#" title="深圳市易保网通科技有限公司">易保网通</a> (推荐使用IE8+,谷歌浏览器) 技术支持：<a href="#" title="CAM">CAM</a></span></span>
     </div>       
 </div>
 </form>

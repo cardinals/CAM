@@ -294,7 +294,7 @@ a:hover {
         <span class="tip">
             <a href="http://www.e-baotong.cn/" title="易保网通">深圳市易保网通科技有限公司</a>
             (推荐谷歌浏览器，获得更快响应速度) 技术支持:
-            <a href="#" title="JEECG Framework  <t:mutiLang langKey="system.version.number"/>">JEECG Framework  <t:mutiLang langKey="system.version.number"/></a>
+            <a href="#" title="CAM Framework  <t:mutiLang langKey="system.version.number"/>">CAM Framework  <t:mutiLang langKey="system.version.number"/></a>
         </span>
     </div>
 </div>
