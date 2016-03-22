@@ -2,6 +2,8 @@ package webservice.client;
 
 import java.util.HashMap;
 
+import org.jeecgframework.core.util.SoapObject;
+
 public class WebServiceTestClient {
 	public static void main(String[] args) {
 		String url = "http://localhost:54918/WebService/CAMServices.asmx"; 

@@ -1,4 +1,4 @@
-package webservice.client;
+package org.jeecgframework.core.util;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
