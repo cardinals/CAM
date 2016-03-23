@@ -23,7 +23,7 @@
 	<t:dgToolBar title="templateDownload" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>
 </t:datagrid></div>
 </div>
-<div region="east" style="width: 600px;" split="true">
+<div region="east" style="width: 510px;" split="true">
 <div tools="#tt" class="easyui-panel" title='<t:mutiLang langKey="permission.set"/>' style="padding: 10px;" fit="true" border="false" id="function-panel"></div>
 </div>
 <div id="tt"></div>
