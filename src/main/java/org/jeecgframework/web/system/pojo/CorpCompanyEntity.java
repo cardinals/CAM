@@ -1,8 +1,5 @@
 package org.jeecgframework.web.system.pojo;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
 /**
  * 类 名 称： CorpCompanyEntity
  * 类 描 述： 合作公司验证接口对象类

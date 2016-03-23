@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 系统用户表
@@ -169,4 +170,16 @@ public class TSUser extends TSBaseUser implements java.io.Serializable {
 	public void setUpdateName(java.lang.String updateName){
 		this.updateName = updateName;
 	}
+	
+	/*所属公司Code*/
+	private java.lang.String companyCode;
+	@Column(name = "companyCode", length = 50)
+	public java.lang.String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(java.lang.String companyCode) {
+		this.companyCode = companyCode;
+	}
+	
 }
