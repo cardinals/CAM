@@ -78,8 +78,8 @@
         </div>
         <div class="form">
             <label class="Validform_label"> <t:mutiLang langKey="common.address"/>: </label>
-            <input name="address" class="inputxt" value="${depart.address }" datatype="s1-50">
-            <span class="Validform_checktip"><t:mutiLang langKey="departmentaddress.rang1to50"/></span>
+            <input name="address" class="inputxt" value="${depart.address }" <%-- datatype="s1-50"--%>>
+           <%--  <span class="Validform_checktip"><t:mutiLang langKey="departmentaddress.rang1to50"/></span> --%>
         </div>
 	</fieldset>
 </t:formvalid>
