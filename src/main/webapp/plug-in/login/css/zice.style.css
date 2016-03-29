@@ -709,7 +709,7 @@ label.iPhoneCheckLabelOff span {
 	border: 1px #cccccc solid;
     /*update-begin--Author:zhangguoming  Date:20140226 for：添加验证码*/
 	/*min-height: 230px;*/
-	min-height: 400px;
+	min-height: 370px;
     /*update-end--Author:zhangguoming  Date:20140226 for：添加验证码*/
 	overflow: hidden;
 	border-radius: 10px;

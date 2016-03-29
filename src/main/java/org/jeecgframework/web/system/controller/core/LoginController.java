@@ -133,24 +133,24 @@ public class LoginController extends BaseController {
 			j.setSuccess(false);
 		} else {
 			int users = userService.getList(TSUser.class).size();
-			if (users == 0) {//没有用户
+			if (users == 0) {// 没有用户
 				j.setMsg("a");
 				j.setSuccess(false);
 			} else {
 				// 如果companyCode为ebaotong，则认为是系统管理员
-				if ("ebaotong".equals(user.getCompanyCode().toLowerCase())) {
+//				if ("ebaotong".equals(user.getCompanyCode().toLowerCase())) {
 					TSUser u = userService.checkUserExits(user);
-					if (u == null) {//用户名或密码错误
+					if (u == null) {// 用户名或密码错误
 						j.setMsg(mutiLangService.getLang("common.username.or.password.error"));
 						j.setSuccess(false);
 						return j;
 					}
 					TSUser u2 = userService.getEntity(TSUser.class, u.getId());
-					if (u != null && u2.getStatus() != 0) {//用户状态
+					if (u != null && u2.getStatus() != 0) {// 用户状态
 						// if (user.getUserKey().equals(u.getUserKey())) {
-						//屏蔽UserKey的验证
+						// 屏蔽UserKey的验证
 						if (true) {
-							u2.setCompanyCode("ebaotong");
+							//u2.setCompanyCode("ebaotong");
 							Map<String, Object> attrMap = new HashMap<String, Object>();
 							j.setAttributes(attrMap);
 							String orgId = req.getParameter("orgId");
@@ -169,42 +169,53 @@ public class LoginController extends BaseController {
 								attrMap.put("orgNum", 1);
 								saveLoginSuccessInfo(req, u2, orgId);
 							}
-						} 
-//						else {
-//							j.setMsg(mutiLangService.getLang("common.check.shield"));
-//							j.setSuccess(false);
-//						}
+						}
+						// else {
+						// j.setMsg(mutiLangService.getLang("common.check.shield"));
+						// j.setSuccess(false);
+						// }
 					} else {
 						j.setMsg(mutiLangService.getLang("common.username.or.password.error"));
 						j.setSuccess(false);
 					}
-				}else{//此分支调用UAC验证合作公司管理员账号
-					String url = "http://localhost:54918/WebService/CAMServices.asmx"; 
-					String xmlns = "http://www.e-bao.cn/"; 
-					String method= "CompanyVerify";							
-					
-					HashMap<String, String> pams = new HashMap<String, String>();
-					String CompanyCode = "abc1201";
-					String UserName = "admin";
-					String Password = "123456";
-					String SoapHeaderUser = "CASClient";
-					String SoapHeaderSign = "adbb683698744f8643d144091a71e040";
-					
-					pams.put("CompanyCode", CompanyCode);
-					pams.put("UserName", UserName);
-					pams.put("Password", Password);
-					pams.put("SoapHeaderUser", SoapHeaderUser);
-					pams.put("SoapHeaderSign", SoapHeaderSign);
-					
-					String result = WebServiceUtil.SoapWebservice(url, xmlns, method, pams, "", "");
-					JSONObject jsonObject;
-					if(!StringUtil.isEmpty(result)){
-						jsonObject = JSONObject.fromObject(result);
-					}else{
-						j.setMsg("合作公司验证失败！");
-						j.setSuccess(false);
-					}
-				}
+//				} else {
+//					// 此分支调用UAC验证合作公司管理员账号
+//					if ("admin".equals(user.getUserName())) {
+//						String url = "http://localhost:54918/WebService/CAMServices.asmx";
+//						String xmlns = "http://www.e-bao.cn/";
+//						String method = "CompanyVerify";
+//
+//						HashMap<String, String> pams = new HashMap<String, String>();
+//						String CompanyCode = user.getCompanyCode();
+//						String UserName = user.getUserName();
+//						String Password = user.getPassword();
+//						String SoapHeaderUser = "CASClient";
+//						String SoapHeaderSign = "adbb683698744f8643d144091a71e040";
+//
+//						pams.put("CompanyCode", CompanyCode);
+//						pams.put("UserName", UserName);
+//						pams.put("Password", Password);
+//						pams.put("SoapHeaderUser", SoapHeaderUser);
+//						pams.put("SoapHeaderSign", SoapHeaderSign);
+//
+//						String result = WebServiceUtil.SoapWebservice(url, xmlns, method, pams, "", "");
+//						JSONObject jsonObject;
+//						if (!StringUtil.isEmpty(result)) {
+//							jsonObject = JSONObject.fromObject(result);
+//							TSUser u3 = new TSUser();
+//							u3.setCompanyCode(CompanyCode);
+//							u3.setUserName(UserName);
+//							;
+//							u3.setRealName(jsonObject.get("CorpCompanyName").toString());
+//							saveLoginSuccessInfo(req, u3, "297ef5ff53a20ed30153a213fb6b0006");
+//						} else {
+//							j.setMsg("合作公司验证失败！");
+//							j.setSuccess(false);
+//						}
+//					}else{
+//					//此分支为合作公司非管理员账号
+//					}
+//				}
 			}
 
 		}
@@ -266,20 +277,31 @@ public class LoginController extends BaseController {
 		TSUser user = ResourceUtil.getSessionUserName();
 		String roles = "";
 		if (user != null) {
-			List<TSRoleUser> rUsers = systemService.findByProperty(TSRoleUser.class, "TSUser.id", user.getId());
-			for (TSRoleUser ru : rUsers) {
-				TSRole role = ru.getTSRole();
-				roles += role.getRoleName() + ",";
-			}
-			if (roles.length() > 0) {
-				roles = roles.substring(0, roles.length() - 1);
-			}
-			modelMap.put("roleName", roles);
-			modelMap.put("userName", user.getUserName());
+			// if ("ebaotong".equals(user.getCompanyCode())) {// 宜保通用户
+				List<TSRoleUser> rUsers = systemService.findByProperty(TSRoleUser.class, "TSUser.id", user.getId());
+				for (TSRoleUser ru : rUsers) {
+					TSRole role = ru.getTSRole();
+					roles += role.getRoleName() + ",";
+				}
+				if (roles.length() > 0) {
+					roles = roles.substring(0, roles.length() - 1);
+				}
 
-			modelMap.put("currentOrgName",
-					ClientManager.getInstance().getClient().getUser().getCurrentDepart().getDepartname());
+				modelMap.put("roleName", roles);
+				modelMap.put("userName", user.getUserName());
 
+				modelMap.put("currentOrgName",
+						ClientManager.getInstance().getClient().getUser().getCurrentDepart().getDepartname());
+//			} else {// 合作公司
+//				if ("admin".equals(user.getUserName())) {
+//					modelMap.put("roleName", "公司管理员");
+//				} else {
+//					modelMap.put("roleName", "管理员");
+//				}
+//				modelMap.put("userName", user.getUserName());
+//
+//				modelMap.put("currentOrgName", user.getRealName());
+//			}
 			request.getSession().setAttribute("CKFinder_UserRole", "admin");
 
 			/*
@@ -498,7 +520,7 @@ public class LoginController extends BaseController {
 
 	/**
 	 * @Title: top @Description: bootstrap头部菜单请求 @param request @return
-	 * ModelAndView @throws
+	 *         ModelAndView @throws
 	 */
 	@RequestMapping(params = "top")
 	public ModelAndView top(HttpServletRequest request) {
@@ -519,7 +541,7 @@ public class LoginController extends BaseController {
 
 	/**
 	 * @Title: top @author gaofeng @Description: shortcut头部菜单请求 @param
-	 * request @return ModelAndView @throws
+	 *         request @return ModelAndView @throws
 	 */
 	@RequestMapping(params = "shortcut_top")
 	public ModelAndView shortcut_top(HttpServletRequest request) {
@@ -540,7 +562,8 @@ public class LoginController extends BaseController {
 
 	/**
 	 * @Title: top @author:gaofeng @Description:
-	 * shortcut头部菜单一级菜单列表，并将其用ajax传到页面，实现动态控制一级菜单列表 @return AjaxJson @throws
+	 *         shortcut头部菜单一级菜单列表，并将其用ajax传到页面，实现动态控制一级菜单列表 @return
+	 *         AjaxJson @throws
 	 */
 	@RequestMapping(params = "primaryMenu")
 	@ResponseBody
@@ -648,7 +671,8 @@ public class LoginController extends BaseController {
 
 	/**
 	 * @Title: top @author:wangkun @Description:
-	 * shortcut头部菜单二级菜单列表，并将其用ajax传到页面，实现动态控制二级菜单列表 @return AjaxJson @throws
+	 *         shortcut头部菜单二级菜单列表，并将其用ajax传到页面，实现动态控制二级菜单列表 @return
+	 *         AjaxJson @throws
 	 */
 	@RequestMapping(params = "primaryMenuDiy")
 	@ResponseBody
