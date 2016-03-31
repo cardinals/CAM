@@ -854,6 +854,12 @@
 			<artifactId>jeecg-p3-biz-actInvite</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<!-- P3 jar -->
+	    <dependency>
+	        <groupId>org.p3framework</groupId>
+	        <artifactId>jeecg-p3-biz-demo</artifactId>
+	        <version>1.0.0</version>
+	    </dependency>
 		<!-- jeecg plugin end  -->
 	</dependencies>
 
