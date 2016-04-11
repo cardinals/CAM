@@ -114,6 +114,12 @@
 						<!--移动图表-->
 						<value>cgDynamGraphController.do?design</value>
 						<value>cgDynamGraphController.do?datagrid</value>
+						
+						<!--online表单对外接口-->
+						<value>cgFormDataController.do?getFormInfo</value>
+						<value>cgFormDataController.do?deleteFormInfo</value>
+						<value>cgFormDataController.do?addFormInfo</value>
+						<value>cgFormDataController.do?updateFormInfo</value>
 					</list>
 				</property>
 				<!-- 模糊匹配 ,主要过滤rest请求-->
