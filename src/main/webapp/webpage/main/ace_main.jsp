@@ -5,16 +5,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<title><t:mutiLang langKey="jeect.platform"/></title>
-<<<<<<< .mine
-		<link rel="shortcut icon" href="favicon.ico">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-||||||| .r83
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-=======
 		<meta name="keywords" content="<t:mutiLang langKey="jeect.platform"/>" />
 		<meta name="description" content="<t:mutiLang langKey="jeect.platform"/>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
->>>>>>> .r85
 		<link rel="stylesheet" href="plug-in/jquery/jquery.contextmenu.css"/>
 		<!-- basic styles -->
 		<link href="plug-in/ace/assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -369,30 +362,10 @@
 							<label class="lbl" for="ace-settings-navbar"> 固定导航条</label>
 						</div>
 
-<<<<<<< .mine
-			<div class="footer">
-				<div class="footer-inner">
-					<!-- #section:basics/footer -->
-					<div class="footer-content">
-						<span class="bigger-120">
-							<span class="blue bolder">CAM</span>
-							 Application &copy; <t:mutiLang langKey="system.version.number"/>
-						</span>
-||||||| .r83
-			<div class="footer">
-				<div class="footer-inner">
-					<!-- #section:basics/footer -->
-					<div class="footer-content">
-						<span class="bigger-120">
-							<span class="blue bolder">JEECG</span>
-							 Application &copy; <t:mutiLang langKey="system.version.number"/>
-						</span>
-=======
 						<div>
 							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
 							<label class="lbl" for="ace-settings-sidebar"> 固定滑动条</label>
 						</div>
->>>>>>> .r85
 
 						<div>
 							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
