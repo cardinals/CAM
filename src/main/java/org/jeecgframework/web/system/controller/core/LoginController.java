@@ -27,9 +27,7 @@ import org.jeecgframework.core.util.ListtoMenu;
 import org.jeecgframework.core.util.NumberComparator;
 import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.SysThemesUtil;
-import org.jeecgframework.core.util.WebServiceUtil;
 import org.jeecgframework.core.util.oConvertUtils;
-import org.jeecgframework.p3.core.common.utils.StringUtil;
 import org.jeecgframework.web.system.manager.ClientManager;
 import org.jeecgframework.web.system.pojo.base.Client;
 import org.jeecgframework.web.system.pojo.base.TSConfig;
@@ -51,18 +49,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import net.sf.json.JSONObject;
-
 /**
  * 登陆初始化控制器
- * 
  * @author 张代浩
  * 
  */
 @Scope("prototype")
 @Controller
 @RequestMapping("/loginController")
-public class LoginController extends BaseController {
+public class LoginController extends BaseController{
 	private Logger log = Logger.getLogger(LoginController.class);
 	private SystemService systemService;
 	private UserService userService;
@@ -70,7 +65,7 @@ public class LoginController extends BaseController {
 
 	@Autowired
 	private MutiLangServiceI mutiLangService;
-
+	
 	@Autowired
 	public void setSystemService(SystemService systemService) {
 		this.systemService = systemService;
@@ -87,23 +82,23 @@ public class LoginController extends BaseController {
 		return "login/pwd_init";
 	}
 
-	// /**
-	// * admin账户密码初始化
-	// *
-	// * @param request
-	// * @return
-	// */
-	// @RequestMapping(params = "pwdInit")
-	// public ModelAndView pwdInit(HttpServletRequest request) {
-	// ModelAndView modelAndView = null;
-	// TSUser user = new TSUser();
-	// user.setUserName("admin");
-	// String newPwd = "123456";
-	// userService.pwdInit(user, newPwd);
-	// modelAndView = new ModelAndView(new RedirectView(
-	// "loginController.do?login"));
-	// return modelAndView;
-	// }
+//	/**
+//	 * admin账户密码初始化
+//	 * 
+//	 * @param request
+//	 * @return
+//	 */
+//	@RequestMapping(params = "pwdInit")
+//	public ModelAndView pwdInit(HttpServletRequest request) {
+//		ModelAndView modelAndView = null;
+//		TSUser user = new TSUser();
+//		user.setUserName("admin");
+//		String newPwd = "123456";
+//		userService.pwdInit(user, newPwd);
+//		modelAndView = new ModelAndView(new RedirectView(
+//				"loginController.do?login"));
+//		return modelAndView;
+//	}
 
 	/**
 	 * 检查用户名称
@@ -116,116 +111,80 @@ public class LoginController extends BaseController {
 	@ResponseBody
 	public AjaxJson checkuser(TSUser user, HttpServletRequest req) {
 		HttpSession session = ContextHolderUtils.getSession();
-		DataSourceContextHolder.setDataSourceType(DataSourceType.dataSource_jeecg);
+		DataSourceContextHolder
+				.setDataSourceType(DataSourceType.dataSource_jeecg);
 		AjaxJson j = new AjaxJson();
         // update-begin--Author:ken  Date:20140629 for：添加语言选择
-		if (req.getParameter("langCode") != null) {
-			req.getSession().setAttribute("lang", req.getParameter("langCode"));
-		}
+        if (req.getParameter("langCode")!=null) {
+        	req.getSession().setAttribute("lang", req.getParameter("langCode"));
+        }
 		// update-end--Author:ken  Date:20140629 for：添加语言选择
 //        update-begin--Author:zhangguoming  Date:20140226 for：添加验证码
-		String randCode = req.getParameter("randCode");
-		if (StringUtils.isEmpty(randCode)) {
-			j.setMsg(mutiLangService.getLang("common.enter.verifycode"));
-			j.setSuccess(false);
-		} else if (!randCode.equalsIgnoreCase(String.valueOf(session.getAttribute("randCode")))) {
-			// todo "randCode"和验证码servlet中该变量一样，通过统一的系统常量配置比较好，暂时不知道系统常量放在什么地方合适
-			j.setMsg(mutiLangService.getLang("common.verifycode.error"));
-			j.setSuccess(false);
-		} else {
-			 int users = userService.getList(TSUser.class).size();
-	            
-	            if (users == 0) {
-	                j.setMsg("a");
-	                j.setSuccess(false);
-	            } else {
-	                TSUser u = userService.checkUserExits(user);
-//	                update-begin--Author:zhangguoming  Date:20140617 for：空指针bug
-	                if(u == null) {
-	                    j.setMsg(mutiLangService.getLang("common.username.or.password.error"));
-	                    j.setSuccess(false);
-	                    return j;
-	                }
-//	                update-end--Author:zhangguoming  Date:20140617 for：空指针bug
-	                TSUser u2 = userService.getEntity(TSUser.class, u.getId());
-	            
-	                if (u != null&&u2.getStatus()!=0) {
-	                    // if (user.getUserKey().equals(u.getUserKey())) {
-	                   
-	                	
-	                    if (true) {
-//	                        update-start-Author:zhangguoming  Date:20140825 for：处理用户有多个组织机构的情况，以弹出框的形式让用户选择
-	                        Map<String, Object> attrMap = new HashMap<String, Object>();
-	                        j.setAttributes(attrMap);
-
-	                        String orgId = req.getParameter("orgId");
-	                        if (oConvertUtils.isEmpty(orgId)) { // 没有传组织机构参数，则获取当前用户的组织机构
-	                            Long orgNum = systemService.getCountForJdbc("select count(1) from t_s_user_org where user_id = '" + u.getId() + "'");
-	                            if (orgNum > 1) {
-	                                attrMap.put("orgNum", orgNum);
-	                                attrMap.put("user", u2);
-	                            } else {
-	                                Map<String, Object> userOrgMap = systemService.findOneForJdbc("select org_id as orgId from t_s_user_org where user_id=?", u2.getId());
-	                                saveLoginSuccessInfo(req, u2, (String) userOrgMap.get("orgId"));
-	                            }
-	                        } else {
-	                            attrMap.put("orgNum", 1);
-
-	                            saveLoginSuccessInfo(req, u2, orgId);
-	                        }
-//	                        update-end-Author:zhangguoming  Date:20140825 for：处理用户有多个组织机构的情况，以弹出框的形式让用户选择
-	                    } else {
-	                        j.setMsg(mutiLangService.getLang("common.check.shield"));
-	                        j.setSuccess(false);
-	                    }
-	                } else {
-	                	j.setMsg(mutiLangService.getLang("common.username.or.password.error"));
-	                    j.setSuccess(false);
-	                }
-//				} else {
-//					// 此分支调用UAC验证合作公司管理员账号
-//					if ("admin".equals(user.getUserName())) {
-//						String url = "http://localhost:54918/WebService/CAMServices.asmx";
-//						String xmlns = "http://www.e-bao.cn/";
-//						String method = "CompanyVerify";
-//
-//						HashMap<String, String> pams = new HashMap<String, String>();
-//						String CompanyCode = user.getCompanyCode();
-//						String UserName = user.getUserName();
-//						String Password = user.getPassword();
-//						String SoapHeaderUser = "CASClient";
-//						String SoapHeaderSign = "adbb683698744f8643d144091a71e040";
-//
-//						pams.put("CompanyCode", CompanyCode);
-//						pams.put("UserName", UserName);
-//						pams.put("Password", Password);
-//						pams.put("SoapHeaderUser", SoapHeaderUser);
-//						pams.put("SoapHeaderSign", SoapHeaderSign);
-//
-//						String result = WebServiceUtil.SoapWebservice(url, xmlns, method, pams, "", "");
-//						JSONObject jsonObject;
-//						if (!StringUtil.isEmpty(result)) {
-//							jsonObject = JSONObject.fromObject(result);
-//							TSUser u3 = new TSUser();
-//							u3.setCompanyCode(CompanyCode);
-//							u3.setUserName(UserName);
-//							;
-//							u3.setRealName(jsonObject.get("CorpCompanyName").toString());
-//							saveLoginSuccessInfo(req, u3, "297ef5ff53a20ed30153a213fb6b0006");
-//						} else {
-//							j.setMsg("合作公司验证失败！");
-//							j.setSuccess(false);
-//						}
-//					}else{
-//					//此分支为合作公司非管理员账号
-//					}
-//				}
-			}
+        String randCode = req.getParameter("randCode");
+        if (StringUtils.isEmpty(randCode)) {
+            j.setMsg(mutiLangService.getLang("common.enter.verifycode"));
+            j.setSuccess(false);
+        } else if (!randCode.equalsIgnoreCase(String.valueOf(session.getAttribute("randCode")))) {
+            // todo "randCode"和验证码servlet中该变量一样，通过统一的系统常量配置比较好，暂时不知道系统常量放在什么地方合适
+            j.setMsg(mutiLangService.getLang("common.verifycode.error"));
+            j.setSuccess(false);
+        } else {
 //            update-end--Author:zhangguoming  Date:20140226 for：添加验证码
-		}
+            int users = userService.getList(TSUser.class).size();
+            
+            if (users == 0) {
+                j.setMsg("a");
+                j.setSuccess(false);
+            } else {
+                TSUser u = userService.checkUserExits(user);
+//                update-begin--Author:zhangguoming  Date:20140617 for：空指针bug
+                if(u == null) {
+                    j.setMsg(mutiLangService.getLang("common.username.or.password.error"));
+                    j.setSuccess(false);
+                    return j;
+                }
+//                update-end--Author:zhangguoming  Date:20140617 for：空指针bug
+                TSUser u2 = userService.getEntity(TSUser.class, u.getId());
+            
+                if (u != null&&u2.getStatus()!=0) {
+                    // if (user.getUserKey().equals(u.getUserKey())) {
+                   
+                	
+                    if (true) {
+//                        update-start-Author:zhangguoming  Date:20140825 for：处理用户有多个组织机构的情况，以弹出框的形式让用户选择
+                        Map<String, Object> attrMap = new HashMap<String, Object>();
+                        j.setAttributes(attrMap);
+
+                        String orgId = req.getParameter("orgId");
+                        if (oConvertUtils.isEmpty(orgId)) { // 没有传组织机构参数，则获取当前用户的组织机构
+                            Long orgNum = systemService.getCountForJdbc("select count(1) from t_s_user_org where user_id = '" + u.getId() + "'");
+                            if (orgNum > 1) {
+                                attrMap.put("orgNum", orgNum);
+                                attrMap.put("user", u2);
+                            } else {
+                                Map<String, Object> userOrgMap = systemService.findOneForJdbc("select org_id as orgId from t_s_user_org where user_id=?", u2.getId());
+                                saveLoginSuccessInfo(req, u2, (String) userOrgMap.get("orgId"));
+                            }
+                        } else {
+                            attrMap.put("orgNum", 1);
+
+                            saveLoginSuccessInfo(req, u2, orgId);
+                        }
+//                        update-end-Author:zhangguoming  Date:20140825 for：处理用户有多个组织机构的情况，以弹出框的形式让用户选择
+                    } else {
+                        j.setMsg(mutiLangService.getLang("common.check.shield"));
+                        j.setSuccess(false);
+                    }
+                } else {
+                	j.setMsg(mutiLangService.getLang("common.username.or.password.error"));
+                    j.setSuccess(false);
+                }
+            }
+//            update-begin--Author:zhangguoming  Date:20140226 for：添加验证码
+        }
+//        update-end--Author:zhangguoming  Date:20140226 for：添加验证码
 		return j;
 	}
-
 
 //    update-start-Author:zhangguoming  Date:20140825 for：记录用户登录的相关信息
     /**
@@ -237,34 +196,37 @@ public class LoginController extends BaseController {
     private void saveLoginSuccessInfo(HttpServletRequest req, TSUser user, String orgId) {
         TSDepart currentDepart = systemService.get(TSDepart.class, orgId);
         user.setCurrentDepart(currentDepart);
-		HttpSession session = ContextHolderUtils.getSession();
+
+        HttpSession session = ContextHolderUtils.getSession();
         //update-begin--update---author:scott-----------date:20151218-------for:解决分布式登录问题----------
-		session.setAttribute(ResourceUtil.LOCAL_CLINET_USER, user);
+        session.setAttribute(ResourceUtil.LOCAL_CLINET_USER, user);
         //update-end--author:scott-----------date:20151218-------for:解决分布式登录问题---------------------
-		message = mutiLangService.getLang("common.user") + ": " + user.getUserName() + "["
-				+ currentDepart.getDepartname() + "]" + mutiLangService.getLang("common.login.success");
+        message = mutiLangService.getLang("common.user") + ": " + user.getUserName() + "["
+                + currentDepart.getDepartname() + "]" + mutiLangService.getLang("common.login.success");
 
       //update-start-Author:jg_renjie  Date:20151220 for：TASK #804 【基础权限】切换用户，用户分拥有不同的权限，切换用户权限错误问题
         //当前session为空 或者 当前session的用户信息与刚输入的用户信息一致时，则更新Client信息
         Client clientOld = ClientManager.getInstance().getClient(session.getId());
 		if(clientOld == null || clientOld.getUser() ==null ||user.getUserName().equals(clientOld.getUser().getUserName())){
 			Client client = new Client();
-			client.setIp(IpUtil.getIpAddr(req));
-			client.setLogindatetime(new Date());
-			client.setUser(user);
-			ClientManager.getInstance().addClinet(session.getId(), client);
-		} else {// 如果不一致，则注销session并通过session=req.getSession(true)初始化session
+	        client.setIp(IpUtil.getIpAddr(req));
+	        client.setLogindatetime(new Date());
+	        client.setUser(user);
+	        ClientManager.getInstance().addClinet(session.getId(), client);
+		} else {//如果不一致，则注销session并通过session=req.getSession(true)初始化session
 			ClientManager.getInstance().removeClinet(session.getId());
 			session.invalidate();
-			session = req.getSession(true);// session初始化
+			session=req.getSession(true);//session初始化
 			session.setAttribute(ResourceUtil.LOCAL_CLINET_USER, user);
-			session.setAttribute("randCode", req.getParameter("randCode"));// 保存验证码
-			checkuser(user, req);
+			session.setAttribute("randCode",req.getParameter("randCode"));//保存验证码
+			checkuser(user,req);
 		}
 		//update-end-Author:jg_renjie  Date:20151220 for：TASK #804 【基础权限】切换用户，用户分拥有不同的权限，切换用户权限错误问题
-		// 添加登陆日志
-		systemService.addLog(message, Globals.Log_Type_LOGIN, Globals.Log_Leavel_INFO);
-	}
+        
+        
+        // 添加登陆日志
+        systemService.addLog(message, Globals.Log_Type_LOGIN, Globals.Log_Leavel_INFO);
+    }
 //    update-end-Author:zhangguoming  Date:20140825 for：记录用户登录的相关信息
 
     /**
@@ -274,90 +236,71 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "login")
-	public String login(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
+	public String login(ModelMap modelMap,HttpServletRequest request,HttpServletResponse response) {
 		DataSourceContextHolder.setDataSourceType(DataSourceType.dataSource_jeecg);
 		TSUser user = ResourceUtil.getSessionUserName();
 		String roles = "";
 		if (user != null) {
-			// if ("ebaotong".equals(user.getCompanyCode())) {// 宜保通用户
-				List<TSRoleUser> rUsers = systemService.findByProperty(TSRoleUser.class, "TSUser.id", user.getId());
-				for (TSRoleUser ru : rUsers) {
-					TSRole role = ru.getTSRole();
-					roles += role.getRoleName() + ",";
-				}
-				if (roles.length() > 0) {
-					roles = roles.substring(0, roles.length() - 1);
-				}
+			List<TSRoleUser> rUsers = systemService.findByProperty(TSRoleUser.class, "TSUser.id", user.getId());
+			for (TSRoleUser ru : rUsers) {
+				TSRole role = ru.getTSRole();
+				roles += role.getRoleName() + ",";
+			}
+			if (roles.length() > 0) {
+				roles = roles.substring(0, roles.length() - 1);
+			}
+            modelMap.put("roleName", roles);
+            modelMap.put("userName", user.getUserName());
             // update-start-Author:zhangguoming  Date:20140914 for：获取当前登录用户的组织机构
-				modelMap.put("roleName", roles);
-				modelMap.put("userName", user.getUserName());
+            modelMap.put("currentOrgName", ClientManager.getInstance().getClient().getUser().getCurrentDepart().getDepartname());
             // update-end-Author:zhangguoming  Date:20140914 for：获取当前登录用户的组织机构
-				modelMap.put("currentOrgName",
-						ClientManager.getInstance().getClient().getUser().getCurrentDepart().getDepartname());
-//			} else {// 合作公司
-//				if ("admin".equals(user.getUserName())) {
-//					modelMap.put("roleName", "公司管理员");
-//				} else {
-//					modelMap.put("roleName", "管理员");
-//				}
-//				modelMap.put("userName", user.getUserName());
-//
-<<<<<<< .mine
-//				modelMap.put("currentOrgName", user.getRealName());
-||||||| .r83
-
+            request.getSession().setAttribute("CKFinder_UserRole", "admin");
+			
+/*			// 默认风格
+			String indexStyle = "shortcut";
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie : cookies) {
+				if (cookie == null || StringUtils.isEmpty(cookie.getName())) {
+					continue;
+				}
+				if (cookie.getName().equalsIgnoreCase("JEECGINDEXSTYLE")) {
+					indexStyle = cookie.getValue();
+				}
+			}
+			// 要添加自己的风格，复制下面三行即可
 //			if (StringUtils.isNotEmpty(indexStyle)
-//					&& indexStyle.equalsIgnoreCase("sliding")) {
-//				return "main/sliding_main";
-=======
+//					&& indexStyle.equalsIgnoreCase("bootstrap")) {
+//				return "main/bootstrap_main";
+//			}
+//			if (StringUtils.isNotEmpty(indexStyle)
+//					&& indexStyle.equalsIgnoreCase("shortcut")) {
+//				return "main/shortcut_main";
+//			}
+//
 ////			update-start--Author:gaofeng  Date:2014-01-24 for:新增首页风格按钮选项
 //			if (StringUtils.isNotEmpty(indexStyle)
 //					&& indexStyle.equalsIgnoreCase("sliding")) {
 //				return "main/sliding_main";
->>>>>>> .r85
 //			}
-<<<<<<< .mine
-			request.getSession().setAttribute("CKFinder_UserRole", "admin");
-
-||||||| .r83
-
-=======
 //	update-start--Author:jg_longjb Date:2015-03-25 for:使用下面这行代码 只要命名规范 增加风格就不需要改这个类了
->>>>>>> .r85
-			/*
-			 * // 默认风格 String indexStyle = "shortcut"; Cookie[] cookies =
-			 * request.getCookies(); for (Cookie cookie : cookies) { if (cookie
-			 * == null || StringUtils.isEmpty(cookie.getName())) { continue; }
-			 * if (cookie.getName().equalsIgnoreCase("JEECGINDEXSTYLE")) {
-			 * indexStyle = cookie.getValue(); } } // 要添加自己的风格，复制下面三行即可 // if
-			 * (StringUtils.isNotEmpty(indexStyle) // &&
-			 * indexStyle.equalsIgnoreCase("bootstrap")) { // return
-			 * "main/bootstrap_main"; // } // if
-			 * (StringUtils.isNotEmpty(indexStyle) // &&
-			 * indexStyle.equalsIgnoreCase("shortcut")) { // return
-			 * "main/shortcut_main"; // } //
-			 * 
-			 * // if (StringUtils.isNotEmpty(indexStyle) // &&
-			 * indexStyle.equalsIgnoreCase("sliding")) { // return
-			 * "main/sliding_main"; // }
-			 * 
-			 * if (StringUtils.isNotEmpty(indexStyle)&&
-			 * !"default".equalsIgnoreCase(indexStyle)&&
-			 * !"undefined".equalsIgnoreCase(indexStyle)) {
-			 * if("ace".equals(indexStyle)){ request.setAttribute("menuMap",
-			 * getFunctionMap(user)); }
-			 * log.info("main/"+indexStyle.toLowerCase()+"_main"); return
-			 * "main/"+indexStyle.toLowerCase()+"_main"; }
-			 */
+			if (StringUtils.isNotEmpty(indexStyle)&&
+					!"default".equalsIgnoreCase(indexStyle)&&
+					!"undefined".equalsIgnoreCase(indexStyle)) {
+				if("ace".equals(indexStyle)){
+					request.setAttribute("menuMap", getFunctionMap(user));
+				}
+				log.info("main/"+indexStyle.toLowerCase()+"_main");
+				return "main/"+indexStyle.toLowerCase()+"_main";
+			}
+			*/
 			SysThemesEnum sysTheme = SysThemesUtil.getSysTheme(request);
-			if ("ace".equals(sysTheme.getStyle()) || "diy".equals(sysTheme.getStyle())
-					|| "acele".equals(sysTheme.getStyle())) {
+			if("ace".equals(sysTheme.getStyle())||"diy".equals(sysTheme.getStyle())||"acele".equals(sysTheme.getStyle())){
 				request.setAttribute("menuMap", getFunctionMap(user));
 			}
 			//update-start--Author:zhoujf Date:20150610 for:ace addOneTab无效问题
 			Cookie cookie = new Cookie("JEECGINDEXSTYLE", sysTheme.getStyle());
-			// 设置cookie有效期为一个月
-			cookie.setMaxAge(3600 * 24 * 30);
+			//设置cookie有效期为一个月
+			cookie.setMaxAge(3600*24*30);
 			response.addCookie(cookie);
 			//update-end--Author:zhoujf Date:20150610 for:ace addOneTab无效问题
 			
@@ -383,10 +326,12 @@ public class LoginController extends BaseController {
 	public ModelAndView logout(HttpServletRequest request) {
 		HttpSession session = ContextHolderUtils.getSession();
 		TSUser user = ResourceUtil.getSessionUserName();
-		systemService.addLog("用户" + user.getUserName() + "已退出", Globals.Log_Type_EXIT, Globals.Log_Leavel_INFO);
+		systemService.addLog("用户" + user.getUserName() + "已退出",
+				Globals.Log_Type_EXIT, Globals.Log_Leavel_INFO);
 		ClientManager.getInstance().removeClinet(session.getId());
 		session.invalidate();
-		ModelAndView modelAndView = new ModelAndView(new RedirectView("loginController.do?login"));
+		ModelAndView modelAndView = new ModelAndView(new RedirectView(
+				"loginController.do?login"));
 		return modelAndView;
 	}
 
@@ -399,19 +344,19 @@ public class LoginController extends BaseController {
 	public ModelAndView left(HttpServletRequest request) {
 		TSUser user = ResourceUtil.getSessionUserName();
 		HttpSession session = ContextHolderUtils.getSession();
-		ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView();
 		// 登陆者的权限
 		if (user.getId() == null) {
 			session.removeAttribute(Globals.USER_SESSION);
-			modelAndView.setView(new RedirectView("loginController.do?login"));
-		} else {
-			List<TSConfig> configs = userService.loadAll(TSConfig.class);
-			for (TSConfig tsConfig : configs) {
-				request.setAttribute(tsConfig.getCode(), tsConfig.getContents());
-			}
-			modelAndView.setViewName("main/left");
-			request.setAttribute("menuMap", getFunctionMap(user));
-		}
+            modelAndView.setView(new RedirectView("loginController.do?login"));
+		}else{
+            List<TSConfig> configs = userService.loadAll(TSConfig.class);
+            for (TSConfig tsConfig : configs) {
+                request.setAttribute(tsConfig.getCode(), tsConfig.getContents());
+            }
+            modelAndView.setViewName("main/left");
+            request.setAttribute("menuMap", getFunctionMap(user));
+        }
 		return modelAndView;
 	}
 
@@ -431,13 +376,14 @@ public class LoginController extends BaseController {
 				Collection<TSFunction> allFunctions = loginActionlist.values();
 				for (TSFunction function : allFunctions) {
 				   //update-begin--Author:anchao  Date:20140913 for：菜单过滤--------------------
-					if (function.getFunctionType().intValue() == Globals.Function_TYPE_FROM.intValue()) {
-						// 如果为表单或者弹出 不显示在系统菜单里面
+		            if(function.getFunctionType().intValue()==Globals.Function_TYPE_FROM.intValue()){
+						//如果为表单或者弹出 不显示在系统菜单里面
 						continue;
 					}
 		          //update-end--Author:anchao  Date:20140913 for：菜单过滤--------------------
 					if (!functionMap.containsKey(function.getFunctionLevel() + 0)) {
-						functionMap.put(function.getFunctionLevel() + 0, new ArrayList<TSFunction>());
+						functionMap.put(function.getFunctionLevel() + 0,
+								new ArrayList<TSFunction>());
 					}
 					functionMap.get(function.getFunctionLevel() + 0).add(function);
 				}
@@ -449,7 +395,7 @@ public class LoginController extends BaseController {
 			}
 			client.setFunctionMap(functionMap);
 			return functionMap;
-		} else {
+		}else{
 			return client.getFunctionMap();
 		}
 	}
@@ -468,38 +414,37 @@ public class LoginController extends BaseController {
             //update-end--Author:JueYue  Date:2014-5-28 for:风格切换,菜单懒加载失效的问题
 			Map<String, TSFunction> loginActionlist = new HashMap<String, TSFunction>();
 //          update-begin--Author:jg_longjb龙金波  Date:20150313 for：优化查询效率，直接用hql减少hibernate产生的sql条数
-			/*
-			 * String hql=
-			 * "from TSFunction t where t.id in  (select d.TSFunction.id from TSRoleFunction d where d.TSRole.id in(select t.TSRole.id from TSRoleUser t where t.TSUser.id ='"
-			 * + user.getId()+"' ))"; String hql2=
-			 * "from TSFunction t where t.id in  ( select b.tsRole.id from TSRoleOrg b where b.tsDepart.id in(select a.tsDepart.id from TSUserOrg a where a.tsUser.id='"
-			 * + user.getId()+"'))"; List<TSFunction> list =
-			 * systemService.findHql(hql); log.info("role functions:  "
-			 * +list.size()); for(TSFunction function:list){
-			 * loginActionlist.put(function.getId(),function); }
-			 * List<TSFunction> list2 = systemService.findHql(hql2); log.info(
-			 * "org functions: "+list2.size()); for(TSFunction function:list2){
-			 * loginActionlist.put(function.getId(),function); }
-			 */
+			 /*String hql="from TSFunction t where t.id in  (select d.TSFunction.id from TSRoleFunction d where d.TSRole.id in(select t.TSRole.id from TSRoleUser t where t.TSUser.id ='"+
+	           user.getId()+"' ))";
+	           String hql2="from TSFunction t where t.id in  ( select b.tsRole.id from TSRoleOrg b where b.tsDepart.id in(select a.tsDepart.id from TSUserOrg a where a.tsUser.id='"+
+	           user.getId()+"'))";
+	           List<TSFunction> list = systemService.findHql(hql);
+	           log.info("role functions:  "+list.size());
+	           for(TSFunction function:list){
+	              loginActionlist.put(function.getId(),function);
+	           }
+	           List<TSFunction> list2 = systemService.findHql(hql2);
+	           log.info("org functions: "+list2.size());
+	           for(TSFunction function:list2){
+	              loginActionlist.put(function.getId(),function);
+	           }*/
 //          update-begin--Author:jg_gudongli辜栋利  Date:20150516 for：优化用户权限查询效率，hql全索引，去重，为了延迟加载使用exists
-			StringBuilder hqlsb1 = new StringBuilder(
-					"select distinct f from TSFunction f,TSRoleFunction rf,TSRoleUser ru  ")
-							.append("where ru.TSRole.id=rf.TSRole.id and rf.TSFunction.id=f.id and ru.TSUser.id=? ");
-			StringBuilder hqlsb2 = new StringBuilder("select distinct c from TSFunction c,TSRoleOrg b,TSUserOrg a ")
-					.append("where a.tsDepart.id=b.tsDepart.id and b.tsRole.id=c.id and a.tsUser.id=?");
-			List<TSFunction> list1 = systemService.findHql(hqlsb1.toString(), user.getId());
-			List<TSFunction> list2 = systemService.findHql(hqlsb2.toString(), user.getId());
-			for (TSFunction function : list1) {
-				loginActionlist.put(function.getId(), function);
-			}
-			for (TSFunction function : list2) {
-				loginActionlist.put(function.getId(), function);
-			}
-			client.setFunctions(loginActionlist);
+	           StringBuilder hqlsb1=new StringBuilder("select distinct f from TSFunction f,TSRoleFunction rf,TSRoleUser ru  ")
+	           .append("where ru.TSRole.id=rf.TSRole.id and rf.TSFunction.id=f.id and ru.TSUser.id=? ");
+	          StringBuilder hqlsb2=new StringBuilder("select distinct c from TSFunction c,TSRoleOrg b,TSUserOrg a ")
+	           .append("where a.tsDepart.id=b.tsDepart.id and b.tsRole.id=c.id and a.tsUser.id=?");
+	           List<TSFunction> list1 = systemService.findHql(hqlsb1.toString(),user.getId());
+	           List<TSFunction> list2 = systemService.findHql(hqlsb2.toString(),user.getId());
+	           for(TSFunction function:list1){
+		              loginActionlist.put(function.getId(),function);
+		           }
+	           for(TSFunction function:list2){
+		              loginActionlist.put(function.getId(),function);
+		           }
+            client.setFunctions(loginActionlist);
 		}
 		return client.getFunctions();
 	}
-
 
 //    update-begin--Author:zhangguoming  Date:20140821 for：抽取方法，获取角色下的权限列表
     /**
@@ -513,14 +458,14 @@ public class LoginController extends BaseController {
         for (TSRoleFunction roleFunction : roleFunctionList) {
             TSFunction function = roleFunction.getTSFunction();
           //update-begin--Author:anchao  Date:20140822 for：[bugfree号]字段级权限（表单，列表）--------------------
-			if (function.getFunctionType().intValue() == Globals.Function_TYPE_FROM.intValue()) {
-				// 如果为表单或者弹出 不显示在系统菜单里面
+            if(function.getFunctionType().intValue()==Globals.Function_TYPE_FROM.intValue()){
+				//如果为表单或者弹出 不显示在系统菜单里面
 				continue;
 			}
           //update-end--Author:anchao  Date:20140822 for：[bugfree号]字段级权限（表单，列表）--------------------
-			loginActionlist.put(function.getId(), function);
-		}
-	}
+            loginActionlist.put(function.getId(), function);
+        }
+    }
 //    update-end--Author:zhangguoming  Date:20140821 for：抽取方法，获取角色下的权限列表
 
     /**
@@ -542,7 +487,6 @@ public class LoginController extends BaseController {
 	 //update-end--Author:jg_renjie  Date:20160315 for：配合首页改造，控制不同风格时是否引入js/css文件
 		return new ModelAndView("main/home");
 	}
-
 	
 	  /**
 	 * ACE首页跳转
@@ -563,7 +507,6 @@ public class LoginController extends BaseController {
 	 //update-end--Author:jg_renjie  Date:20160315 for：配合首页改造，控制不同风格时是否引入js/css文件
 		return new ModelAndView("main/acehome");
 	}
-
 	/**
 	 * 无权限页面提示跳转
 	 * 
@@ -573,10 +516,12 @@ public class LoginController extends BaseController {
 	public ModelAndView noAuth(HttpServletRequest request) {
 		return new ModelAndView("common/noAuth");
 	}
-
 	/**
-	 * @Title: top @Description: bootstrap头部菜单请求 @param request @return
-	 *         ModelAndView @throws
+	 * @Title: top
+	 * @Description: bootstrap头部菜单请求
+	 * @param request
+	 * @return ModelAndView
+	 * @throws
 	 */
 	@RequestMapping(params = "top")
 	public ModelAndView top(HttpServletRequest request) {
@@ -585,7 +530,8 @@ public class LoginController extends BaseController {
 		// 登陆者的权限
 		if (user.getId() == null) {
 			session.removeAttribute(Globals.USER_SESSION);
-			return new ModelAndView(new RedirectView("loginController.do?login"));
+			return new ModelAndView(
+					new RedirectView("loginController.do?login"));
 		}
 		request.setAttribute("menuMap", getFunctionMap(user));
 		List<TSConfig> configs = userService.loadAll(TSConfig.class);
@@ -594,10 +540,13 @@ public class LoginController extends BaseController {
 		}
 		return new ModelAndView("main/bootstrap_top");
 	}
-
 	/**
-	 * @Title: top @author gaofeng @Description: shortcut头部菜单请求 @param
-	 *         request @return ModelAndView @throws
+	 * @Title: top
+	 * @author gaofeng
+	 * @Description: shortcut头部菜单请求
+	 * @param request
+	 * @return ModelAndView
+	 * @throws
 	 */
 	@RequestMapping(params = "shortcut_top")
 	public ModelAndView shortcut_top(HttpServletRequest request) {
@@ -606,7 +555,8 @@ public class LoginController extends BaseController {
 		// 登陆者的权限
 		if (user.getId() == null) {
 			session.removeAttribute(Globals.USER_SESSION);
-			return new ModelAndView(new RedirectView("loginController.do?login"));
+			return new ModelAndView(
+					new RedirectView("loginController.do?login"));
 		}
 		request.setAttribute("menuMap", getFunctionMap(user));
 		List<TSConfig> configs = userService.loadAll(TSConfig.class);
@@ -615,125 +565,111 @@ public class LoginController extends BaseController {
 		}
 		return new ModelAndView("main/shortcut_top");
 	}
-
+	
 	/**
-	 * @Title: top @author:gaofeng @Description:
-	 *         shortcut头部菜单一级菜单列表，并将其用ajax传到页面，实现动态控制一级菜单列表 @return
-	 *         AjaxJson @throws
+	 * @Title: top
+	 * @author:gaofeng
+	 * @Description: shortcut头部菜单一级菜单列表，并将其用ajax传到页面，实现动态控制一级菜单列表
+	 * @return AjaxJson
+	 * @throws
 	 */
-	@RequestMapping(params = "primaryMenu")
-	@ResponseBody
+    @RequestMapping(params = "primaryMenu")
+    @ResponseBody
 	public String getPrimaryMenu() {
 		List<TSFunction> primaryMenu = getFunctionMap(ResourceUtil.getSessionUserName()).get(0);
-		String floor = "";
+        String floor = "";
 //        update-start--Author:zhangguoming  Date:20140923 for：用户没有任何权限，首页没有退出按钮的bug
-		if (primaryMenu == null) {
-			return floor;
-		}
+        if (primaryMenu == null) {
+            return floor;
+        }
 //        update-end--Author:zhangguoming  Date:20140923 for：用户没有任何权限，首页没有退出按钮的bug
-		for (TSFunction function : primaryMenu) {
-			if (function.getFunctionLevel() == 0) {
-				String lang_key = function.getFunctionName();
-				String lang_context = mutiLangService.getLang(lang_key);
-				lang_context = lang_context.trim();
+        for (TSFunction function : primaryMenu) {
+            if(function.getFunctionLevel() == 0) {
+            	String lang_key = function.getFunctionName();
+            	String lang_context = mutiLangService.getLang(lang_key);
+            	lang_context=lang_context.trim();
 //              update-start--Author:huangzq  Date:20160113 for：:TASK#858::【系统功能】logo替换
-				if ("业务申请".equals(lang_context)) {
+            	if("业务申请".equals(lang_context)){
 
-					String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"
-							+ lang_context + "</span></div>";
-					floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/ywsq.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/ywsq-up.png' style='display: none;' />"
-							+ ss + " </li> ";
-				} else if ("个人办公".equals(lang_context)) {
+                	String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"+ lang_context +"</span></div>";
+                    floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/ywsq.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/ywsq-up.png' style='display: none;' />" +ss+ " </li> ";
+                }else if("个人办公".equals(lang_context)){
 
-					String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"
-							+ lang_context + "</span></div>";
-					floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/grbg.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/grbg-up.png' style='display: none;' />"
-							+ ss + " </li> ";
-				} else if ("流程管理".equals(lang_context)) {
+                	String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"+ lang_context +"</span></div>";
+                    floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/grbg.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/grbg-up.png' style='display: none;' />" +ss+ " </li> ";
+                }else if("流程管理".equals(lang_context)){
 
-					String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"
-							+ lang_context + "</span></div>";
-					floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/lcsj.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/lcsj-up.png' style='display: none;' />"
-							+ ss + " </li> ";
-				} else if ("Online 开发".equals(lang_context)) {
+                	String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"+ lang_context +"</span></div>";
+                    floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/lcsj.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/lcsj-up.png' style='display: none;' />" +ss+ " </li> ";
+                }else if("Online 开发".equals(lang_context)){
 
-					floor += " <li><img class='imag1' src='plug-in/login/images/online.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/online_up.png' style='display: none;' />"
-							+ " </li> ";
-				} else if ("自定义表单".equals(lang_context)) {
+                    floor += " <li><img class='imag1' src='plug-in/login/images/online.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/online_up.png' style='display: none;' />" + " </li> ";
+                }else if("自定义表单".equals(lang_context)){
 
-					String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"
-							+ lang_context + "</span></div>";
-					floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/zdybd.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/zdybd-up.png' style='display: none;' />"
-							+ ss + " </li> ";
-				} else if ("系统监控".equals(lang_context)) {
+                	String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"+ lang_context +"</span></div>";
+                    floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/zdybd.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/zdybd-up.png' style='display: none;' />" +ss+ " </li> ";
+                }else if("系统监控".equals(lang_context)){
 
-					floor += " <li><img class='imag1' src='plug-in/login/images/xtjk.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/xtjk_up.png' style='display: none;' />"
-							+ " </li> ";
-				} else if ("统计报表".equals(lang_context)) {
+                    floor += " <li><img class='imag1' src='plug-in/login/images/xtjk.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/xtjk_up.png' style='display: none;' />" + " </li> ";
+                }else if("统计报表".equals(lang_context)){
 
-					floor += " <li><img class='imag1' src='plug-in/login/images/tjbb.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/tjbb_up.png' style='display: none;' />"
-							+ " </li> ";
-				} else if ("消息中间件".equals(lang_context)) {
-					String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"
-							+ lang_context + "</span></div>";
-					floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/msg.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/msg_up.png' style='display: none;' />" + ss
-							+ " </li> ";
-				} else if ("系统管理".equals(lang_context)) {
+                    floor += " <li><img class='imag1' src='plug-in/login/images/tjbb.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/tjbb_up.png' style='display: none;' />" + " </li> ";
+                }else if("消息中间件".equals(lang_context)){
+                	String ss = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"+ lang_context +"</span></div>";
+                    floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/msg.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/msg_up.png' style='display: none;' />" +ss+ " </li> ";
+                }else if("系统管理".equals(lang_context)){
 
-					floor += " <li><img class='imag1' src='plug-in/login/images/xtgl.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/xtgl_up.png' style='display: none;' />"
-							+ " </li> ";
-				} else if ("常用示例".equals(lang_context)) {
+                    floor += " <li><img class='imag1' src='plug-in/login/images/xtgl.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/xtgl_up.png' style='display: none;' />" + " </li> ";
+                }else if("常用示例".equals(lang_context)){
 
-					floor += " <li><img class='imag1' src='plug-in/login/images/cysl.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/cysl_up.png' style='display: none;' />"
-							+ " </li> ";
-				} else if (lang_context.contains("消息推送")) {
+                    floor += " <li><img class='imag1' src='plug-in/login/images/cysl.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/cysl_up.png' style='display: none;' />" + " </li> ";
+                }else if(lang_context.contains("消息推送")){
+                	
+                	String s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'>消息推送</div>";
+                    floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/msg.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/msg_up.png' style='display: none;' />"
+                            + s +"</li> ";
+                }else{
+                    //其他的为默认通用的图片模式
+                	String s="";
+                    if(lang_context.length()>=5 && lang_context.length()<7){
+                        s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"+ lang_context +"</span></div>";
+                    }else if(lang_context.length()<5){
+                        s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'>"+ lang_context +"</div>";
+                    }else if(lang_context.length()>=7){
+                        s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"+ lang_context.substring(0, 6) +"</span></div>";
+                    }
+                    floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/default.png' /> "
+                            + " <img class='imag2' src='plug-in/login/images/default_up.png' style='display: none;' />"
+                            + s +"</li> ";
+                }
+            }
+        }
 //      update-end--Author:huangzq  Date:20160114 for：:TASK#858::【系统功能】logo替换
-					String s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'>消息推送</div>";
-					floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/msg.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/msg_up.png' style='display: none;' />" + s
-							+ "</li> ";
-				} else {
-					// 其他的为默认通用的图片模式
-					String s = "";
-					if (lang_context.length() >= 5 && lang_context.length() < 7) {
-						s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"
-								+ lang_context + "</span></div>";
-					} else if (lang_context.length() < 5) {
-						s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'>"
-								+ lang_context + "</div>";
-					} else if (lang_context.length() >= 7) {
-						s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'><span style='letter-spacing:-1px;'>"
-								+ lang_context.substring(0, 6) + "</span></div>";
-					}
-					floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/default.png' /> "
-							+ " <img class='imag2' src='plug-in/login/images/default_up.png' style='display: none;' />"
-							+ s + "</li> ";
-				}
-			}
-		}
-
 		return floor;
 	}
 
 	/**
-	 * @Title: top @author:wangkun @Description:
-	 *         shortcut头部菜单二级菜单列表，并将其用ajax传到页面，实现动态控制二级菜单列表 @return
-	 *         AjaxJson @throws
+	 * @Title: top
+	 * @author:wangkun
+	 * @Description: shortcut头部菜单二级菜单列表，并将其用ajax传到页面，实现动态控制二级菜单列表
+	 * @return AjaxJson
+	 * @throws
 	 */
 	@RequestMapping(params = "primaryMenuDiy")
 	@ResponseBody
 	public String getPrimaryMenuDiy() {
-		// 取二级菜单
+		//取二级菜单
 		List<TSFunction> primaryMenu = getFunctionMap(ResourceUtil.getSessionUserName()).get(1);
 		String floor = "";
 		if (primaryMenu == null) {
@@ -741,65 +677,55 @@ public class LoginController extends BaseController {
 		}
 		String menuString = "user.manage role.manage department.manage menu.manage";
 		for (TSFunction function : primaryMenu) {
-			if (menuString.contains(function.getFunctionName())) {
-				if (function.getFunctionLevel() == 1) {
+			if(menuString.contains(function.getFunctionName())){
+				if(function.getFunctionLevel() == 1) {
 
 					String lang_key = function.getFunctionName();
 					String lang_context = mutiLangService.getLang(lang_key);
-					if ("申请".equals(lang_key)) {
+					if("申请".equals(lang_key)){
 						lang_context = "申请";
 						String s = "";
-						s = "<div style='width:67px;position: absolute;top:47px;text-align:center;color:#000000;font-size:12px;'>"
-								+ lang_context + "</div>";
+						s = "<div style='width:67px;position: absolute;top:47px;text-align:center;color:#000000;font-size:12px;'>"+ lang_context +"</div>";
 						floor += " <li><img class='imag1' src='plug-in/login/images/head_icon1.png' /> "
-								+ " <img class='imag2' src='plug-in/login/images/head_icon1.png' style='display: none;' />"
-								+ s + " </li> ";
-					} else if ("Online 开发".equals(lang_context)) {
+								+ " <img class='imag2' src='plug-in/login/images/head_icon1.png' style='display: none;' />" + s + " </li> ";
+					} else if("Online 开发".equals(lang_context)){
 
 						floor += " <li><img class='imag1' src='plug-in/login/images/online.png' /> "
-								+ " <img class='imag2' src='plug-in/login/images/online_up.png' style='display: none;' />"
-								+ " </li> ";
-					} else if ("统计查询".equals(lang_context)) {
+								+ " <img class='imag2' src='plug-in/login/images/online_up.png' style='display: none;' />" + " </li> ";
+					}else if("统计查询".equals(lang_context)){
 
 						floor += " <li><img class='imag1' src='plug-in/login/images/guanli.png' /> "
-								+ " <img class='imag2' src='plug-in/login/images/guanli_up.png' style='display: none;' />"
-								+ " </li> ";
-					} else if ("系统管理".equals(lang_context)) {
+								+ " <img class='imag2' src='plug-in/login/images/guanli_up.png' style='display: none;' />" + " </li> ";
+					}else if("系统管理".equals(lang_context)){
 
 						floor += " <li><img class='imag1' src='plug-in/login/images/xtgl.png' /> "
-								+ " <img class='imag2' src='plug-in/login/images/xtgl_up.png' style='display: none;' />"
-								+ " </li> ";
-					} else if ("常用示例".equals(lang_context)) {
+								+ " <img class='imag2' src='plug-in/login/images/xtgl_up.png' style='display: none;' />" + " </li> ";
+					}else if("常用示例".equals(lang_context)){
 
 						floor += " <li><img class='imag1' src='plug-in/login/images/cysl.png' /> "
-								+ " <img class='imag2' src='plug-in/login/images/cysl_up.png' style='display: none;' />"
-								+ " </li> ";
-					} else if ("系统监控".equals(lang_context)) {
+								+ " <img class='imag2' src='plug-in/login/images/cysl_up.png' style='display: none;' />" + " </li> ";
+					}else if("系统监控".equals(lang_context)){
 
 						floor += " <li><img class='imag1' src='plug-in/login/images/xtjk.png' /> "
-								+ " <img class='imag2' src='plug-in/login/images/xtjk_up.png' style='display: none;' />"
-								+ " </li> ";
-					} else if (lang_context.contains("消息推送")) {
+								+ " <img class='imag2' src='plug-in/login/images/xtjk_up.png' style='display: none;' />" + " </li> ";
+					}else if(lang_context.contains("消息推送")){
 						String s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#909090;font-size:12px;'>消息推送</div>";
 						floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/msg.png' /> "
 								+ " <img class='imag2' src='plug-in/login/images/msg_up.png' style='display: none;' />"
-								+ s + "</li> ";
-					} else {
-						// 其他的为默认通用的图片模式
+								+ s +"</li> ";
+					}else{
+						//其他的为默认通用的图片模式
 						String s = "";
-						if (lang_context.length() >= 5 && lang_context.length() < 7) {
-							s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#000000;font-size:12px;'><span style='letter-spacing:-1px;'>"
-									+ lang_context + "</span></div>";
-						} else if (lang_context.length() < 5) {
-							s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#000000;font-size:12px;'>"
-									+ lang_context + "</div>";
-						} else if (lang_context.length() >= 7) {
-							s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#000000;font-size:12px;'><span style='letter-spacing:-1px;'>"
-									+ lang_context.substring(0, 6) + "</span></div>";
+						if(lang_context.length()>=5 && lang_context.length()<7){
+							s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#000000;font-size:12px;'><span style='letter-spacing:-1px;'>"+ lang_context +"</span></div>";
+						}else if(lang_context.length()<5){
+							s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#000000;font-size:12px;'>"+ lang_context +"</div>";
+						}else if(lang_context.length()>=7){
+							s = "<div style='width:67px;position: absolute;top:40px;text-align:center;color:#000000;font-size:12px;'><span style='letter-spacing:-1px;'>"+ lang_context.substring(0, 6) +"</span></div>";
 						}
 						floor += " <li style='position: relative;'><img class='imag1' src='plug-in/login/images/head_icon2.png' /> "
 								+ " <img class='imag2' src='plug-in/login/images/default_up.png' style='display: none;' />"
-								+ s + "</li> ";
+								+ s +"</li> ";
 					}
 				}
 			}
@@ -807,7 +733,6 @@ public class LoginController extends BaseController {
 
 		return floor;
 	}
-
 	/**
 	 * 云桌面返回：用户权限菜单
 	 */
@@ -815,11 +740,11 @@ public class LoginController extends BaseController {
 	@ResponseBody
 	public AjaxJson getPrimaryMenuForWebos() {
 		AjaxJson j = new AjaxJson();
-		// 将菜单加载到Session，用户只在登录的时候加载一次
-		Object getPrimaryMenuForWebos = ContextHolderUtils.getSession().getAttribute("getPrimaryMenuForWebos");
-		if (oConvertUtils.isNotEmpty(getPrimaryMenuForWebos)) {
+		//将菜单加载到Session，用户只在登录的时候加载一次
+		Object getPrimaryMenuForWebos =  ContextHolderUtils.getSession().getAttribute("getPrimaryMenuForWebos");
+		if(oConvertUtils.isNotEmpty(getPrimaryMenuForWebos)){
 			j.setMsg(getPrimaryMenuForWebos.toString());
-		} else {
+		}else{
 			String PMenu = ListtoMenu.getWebosMenu(getFunctionMap(ResourceUtil.getSessionUserName()));
 			ContextHolderUtils.getSession().setAttribute("getPrimaryMenuForWebos", PMenu);
 			j.setMsg(PMenu);
@@ -827,23 +752,20 @@ public class LoginController extends BaseController {
 		return j;
 	}
 
-	/**
-	 * 另一套登录界面
-	 * 
-	 * @return
-	 */
-	@RequestMapping(params = "login2")
-	public String login2() {
-		return "login/login2";
-	}
-
+    /**
+     * 另一套登录界面
+     * @return
+     */
+    @RequestMapping(params = "login2")
+    public String login2(){
+        return "login/login2";
+    }
 	/**
 	 * ACE登录界面
-	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "login3")
-	public String login3() {
+	public String login3(){
 		return "login/login3";
 	}
 }

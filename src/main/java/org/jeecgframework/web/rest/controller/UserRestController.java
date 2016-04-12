@@ -42,15 +42,11 @@ public class UserRestController {
 	@Autowired
 	private Validator validator;
 
-<<<<<<< .mine
 	//get User 列表     路径  /rest/user
-||||||| .r83
-=======
 	/**
 	 * 访问地址：http://localhost:8080/jeecg/rest/user
 	 * @return
 	 */
->>>>>>> .r85
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<TSUser> list() {
@@ -58,16 +54,12 @@ public class UserRestController {
 		return listUsers;
 	}
 
-<<<<<<< .mine
 	//get User 列表     路径  /rest/user/id  
-||||||| .r83
-=======
 	/**
 	 * 访问地址：http://localhost:8080/jeecg/rest/user/{id}
 	 * @param id
 	 * @return
 	 */
->>>>>>> .r85
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> get(@PathVariable("id") String id) {
